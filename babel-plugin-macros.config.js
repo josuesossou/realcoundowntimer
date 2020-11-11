@@ -1,4 +1,3 @@
-
 module.exports = {
     tailwind: {
       plugins: ["macros"],
