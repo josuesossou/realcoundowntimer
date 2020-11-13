@@ -1,0 +1,12 @@
+.side-pan {
+    width: 100% !important;
+    box-shadow: none !important;
+    box-sizing: border-box !important;
+    background-color: transparent !important;
+    padding: 0 !important;
+
+}
+
+.flexbox-fix{
+    border: 0 !important;
+}

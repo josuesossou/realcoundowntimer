@@ -1,7 +1,7 @@
 import main from './Main'
 import sidePanel from './SidePanel'
-import timeEditor from './TimeEditor'
+import bottomPanel from './BottomPanel'
 
 export const Main = main
 export const SidePanel = sidePanel
-export const TimeEditor = timeEditor
+export const BottomPanel = bottomPanel

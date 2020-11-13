@@ -2,7 +2,7 @@ import React from 'react'
 
 export default () => {
     return (
-        <div className="h-full w-full bg-green-500">
+        <div className="h-20 w-full bg-gray-200">
             
         </div>
     )
