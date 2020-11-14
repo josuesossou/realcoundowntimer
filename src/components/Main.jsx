@@ -46,12 +46,12 @@ export default ({days, hours, minutes, seconds}) => {
     }, [seconds, minutes, hours, days])
 
     return (
-        <div className="h-full w-full bg-red-300 shadow-lg flex flex-col items-center">
-            <div >Title</div>
-            <div className="flex-1">
-                <div>{time.sec? `${time.sec < 10 ? "0" : ""}${time.sec}` : "00"}</div>
-                <div>{time.min? `${time.min < 10 ? "0" : ""}${time.min}` : "00"}</div>
-                <div>{time.hour? `${time.hour < 10 ? "0" : ""}${time.hour}` : "00"}</div>
+        <div className="h-full w-full bg-red-300 shadow-lg flex flex-col items-center justify-center">
+            <div className="">Title</div>
+            <div className="flex flex-row-reverse">
+                <div>{time.sec? `${time.sec < 10 ? "0" : ""}${time.sec}` : "00"}</div> :
+                <div>{time.min? `${time.min < 10 ? "0" : ""}${time.min}` : "00"}</div> :
+                <div>{time.hour? `${time.hour < 10 ? "0" : ""}${time.hour}` : "00"}</div> :
                 <div>{time.day? `${time.day < 10 ? "0" : ""}${time.day}` : "00"}</div>
             </div>
             <div>Date</div>
