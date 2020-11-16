@@ -1,28 +1,39 @@
-import React from 'react'
+import React, { useState } from 'react'
 import { TextBoxed } from './Shared'
 import GeneralSetting from './GeneralSetting'
-import '../css/custom.css'
+import BackgroundSetting from './BackgroundSetting'
+import TextSetting from './TextSetting'
+import ColorPicker from './ColorPicker'
 
 /* eslint import/no-anonymous-default-export: [2, {"allowArrowFunction": true}] */
 export default ({ updateState, state }) => {
-    // const [bg, setBg] = useState('fff')
-    // const [changeState, setChangeState] = useState
-    // const [selected, setSelected] = useState({ date: false, day: false, hour: false })
-    // const handleChangeComplete = (color) => {
-    //     setBg(color)
-    // }
-    // const handleChange = (color, event) => {
-    //     console.log(color, event)
-    // }
+    const goBack = () => {
+        state.history.pop()
+        const newLink = state.history[state.history.length - 1]
+        updateState((prev) => ({...prev, navLink: newLink}))
+    }
 
     return (
         <div className="h-full w-full bg-gray-800 text-gray-500">
             <div className="flex w-full h-12 bg-gray-700 items-center justify-center">
+                {state.navLink !== 'General' ?
+                    (
+                        <TextBoxed onClick={goBack}>arrleft</TextBoxed>
+                    ) : null}
                 <TextBoxed>General Setting</TextBoxed>
             </div>
 
-            <GeneralSetting updateState={updateState} state={state} />
-           
+            {state.navLink === 'General' ? 
+                <GeneralSetting updateState={updateState} state={state} /> : null}
+            
+            {state.navLink === 'Background' ? 
+                <BackgroundSetting updateState={updateState} state={state} /> : null}
+
+            {state.navLink === 'Text' ?
+                <TextSetting updateState={updateState} state={state} /> : null}
+
+            {state.navLink === 'ColorPicker' ?
+                <ColorPicker updateState={updateState} state={state} /> : null}
         </div>
     )
 }
