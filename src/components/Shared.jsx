@@ -1,6 +1,6 @@
 import styled from "styled-components";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faAngleRight, faAngleLeft } from '@fortawesome/free-solid-svg-icons'
+import { faAngleRight, faAngleLeft, faArrowLeft } from '@fortawesome/free-solid-svg-icons'
 
 
 const Button = styled.button.attrs({
@@ -36,10 +36,10 @@ export const InputBox = styled.input.attrs({
     outline: 0 !important   
 `
 export const Text = styled.p.attrs({
-    className: ""
+    className: "font-semibold"
 })``
 export const HeaderText = styled(Text).attrs({
-    className: "mb-2 font-semibold"
+    className: "mb-2 "
 })``
 
 export const Wrapper = styled.div.attrs({
@@ -93,3 +93,4 @@ export const Hr = styled.div.attrs({
 
 export const AngleRightIcon = () => <FontAwesomeIcon icon={faAngleRight} />
 export const AngleLeftIcon = () => <FontAwesomeIcon icon={faAngleLeft} />
+export const ArrowLeftIcon = () => <FontAwesomeIcon icon={faArrowLeft} />

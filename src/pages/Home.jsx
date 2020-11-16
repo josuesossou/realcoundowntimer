@@ -35,7 +35,8 @@ export default () => {
         urlBg: '',
         urlBgSize: 'cover',
         counterBgColor: '#888888',
-        counterBgHeirearchy: 0
+        counterBgHeirearchy: 0,
+        textColor: '#000'
     })
 
     return (

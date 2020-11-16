@@ -1,5 +1,6 @@
 import React, { useState, useEffect, useRef, useCallback } from 'react'
 import { RowBox, ColumnBox, BgContent } from './Shared'
+import WebFont from 'webfontloader'
 import styled from 'styled-components'
 
 const CustomColumnBox = styled(ColumnBox).attrs(({ heirachy }) => ({
@@ -14,7 +15,7 @@ const SmallText = styled.div.attrs({
     line-height: normal;
 `
 const LargeText = styled.div.attrs(({ heirachy }) => ({
-    className: `text-2xl p-0 m-0 mb-3 relative w-32 text-center
+    className: `text-2xl p-0 m-0 mb-3 relative text-center
                 ${heirachy === 1 ? 'shadow-lg' : ''}`
 }))`
     line-height: normal;
@@ -25,13 +26,18 @@ const ColonStyle = styled.p.attrs({
 })`
     line-height: normal;
 `
-const CounterWrapper = styled.p.attrs(({ heirachy }) => ({
-    className: `flex flex-row-reverse mb-12 pb-3 px-3 w-auto justify-center
+const CounterWrapper = styled.div.attrs(({ heirachy }) => ({
+    className: `flex flex-row-reverse mb-10 pb-3 px-3 w-auto justify-center
                 ${heirachy === 3 ? 'shadow-lg' : ''}`
 }))`
     background: ${props => props.bg};
 `
-
+const CountDownWrapper = styled.div.attrs({
+    className: 'h-full w-full flex flex-col items-center justify-start pt-16 z-10 relative'
+})`
+    color: ${props => props.textColor};
+    font-family: 'Bowlby One';
+`
 
 /* eslint import/no-anonymous-default-export: [2, {"allowArrowFunction": true}] */
 export default ({ state }) => {
@@ -74,6 +80,12 @@ export default ({ state }) => {
         tick(state.seconds, state.minutes, state.hours, state.days)
     }, [state.seconds, state.minutes, state.hours, state.days, tick])
 
+    WebFont.load({
+        google: {
+          families: ['Droid Sans', 'Droid Serif', 'Bowlby One']
+        }
+    })
+
     return (
         <div className="h-full w-full shadow-lg relative">
             {state.bgType === 'solid' ? 
@@ -86,7 +98,7 @@ export default ({ state }) => {
                 <BgContent bg={`${state.bgColor} url("${state.urlBg}") center/${state.urlBgSize} no-repeat`} /> : null}
             
 
-            <div className='h-full w-full flex flex-col items-center justify-start pt-16 z-10 relative'>
+            <CountDownWrapper textColor={state.textColor}>
                 <div className="text-xl">
                     {state.title}
                 </div>
@@ -153,7 +165,7 @@ export default ({ state }) => {
                     ) : null}
                 </CounterWrapper>
                 {state.showDate ? (<div className="text-md">{state.date}</div>) : null}
-            </div>
+            </CountDownWrapper>
         </div>
     )
 }

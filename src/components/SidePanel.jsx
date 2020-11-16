@@ -1,5 +1,5 @@
-import React, { useState } from 'react'
-import { HeaderText, Text, LeftArrow, AngleLeftIcon } from './Shared'
+import React from 'react'
+import { Text, LeftArrow, ArrowLeftIcon } from './Shared'
 import GeneralSetting from './GeneralSetting'
 import BackgroundSetting from './BackgroundSetting'
 import CounterBackgroundSetting from './CounterBackgroundSetting'
@@ -19,7 +19,7 @@ export default ({ updateState, state }) => {
             <div className="flex w-full h-12 bg-gray-700 items-center justify-center relative">
                 {state.navLink !== 'General' ? (
                         <LeftArrow onClick={goBack}>
-                            <AngleLeftIcon />
+                            <ArrowLeftIcon />
                         </LeftArrow>
                     ) : null}
                 <Text>{state.navLink} Setting</Text>

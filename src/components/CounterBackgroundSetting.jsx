@@ -10,9 +10,6 @@ import {
     HeaderText, 
     Wrapper, 
     Separator,
-    RowBox,
-    InputBox,
-    Hr
 } from './Shared'
 
 export default ({ state, updateState}) => {
