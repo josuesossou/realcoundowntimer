@@ -1,6 +1,6 @@
 import React from 'react'
 import { SmallBtn, LongBtn, CustomColumnBox, RowBox,
-    InputBox, TextBoxed, Wrapper } from './Shared'
+    InputBox, TextBoxed, Wrapper, AngleRightIcon } from './Shared'
 
 export default ({ state, updateState, updateCurrent }) => {
     const { 
@@ -119,6 +119,7 @@ export default ({ state, updateState, updateCurrent }) => {
                     }}
                 >
                     Text
+                    
                 </LongBtn>
             </CustomColumnBox>
         </Wrapper>

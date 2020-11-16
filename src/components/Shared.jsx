@@ -1,4 +1,7 @@
 import styled from "styled-components";
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { faAngleRight, faAngleLeft } from '@fortawesome/free-solid-svg-icons'
+
 
 const Button = styled.button.attrs({
     className: `transition duration-500 ease-in-out 
@@ -66,3 +69,5 @@ export const ColorPickerBg = styled.div.attrs({
 })`
     background-color: ${props => props.bgColor}
 `
+export const AngleRightIcon = <FontAwesomeIcon icon={faAngleRight} />
+export const AngleLeftIcon = <FontAwesomeIcon icon={faAngleLeft} />
