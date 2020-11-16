@@ -1,25 +1,35 @@
 import React, { useState, useEffect, useRef, useCallback } from 'react'
-import { RowBox, ColumnBox } from './Shared'
+import { RowBox, ColumnBox, BgContent } from './Shared'
 import styled from 'styled-components'
 
-const CustomColumnBox = styled(ColumnBox).attrs({
-    className: 'items-center relative px-4'
-})`
+const CustomColumnBox = styled(ColumnBox).attrs(({ heirachy }) => ({
+    className: `items-center relative px-3
+                ${heirachy === 2 ? 'shadow-lg' : ''}`
+}))`
+    background: ${props => props.bg};
 `
 const SmallText = styled.div.attrs({
-    className: 'text-xm'
+    className: 'text-xm mb-3'
 })`
     line-height: normal;
 `
-const LargeText = styled.div.attrs({
-    className: 'text-2xl p-0 m-0 relative w-32 text-center'
-})`
+const LargeText = styled.div.attrs(({ heirachy }) => ({
+    className: `text-2xl p-0 m-0 mb-3 relative w-32 text-center
+                ${heirachy === 1 ? 'shadow-lg' : ''}`
+}))`
     line-height: normal;
+    background: ${props => props.bg};
 `
 const ColonStyle = styled.p.attrs({
-    className: "text-2xl"
+    className: "text-2xl px-3"
 })`
     line-height: normal;
+`
+const CounterWrapper = styled.p.attrs(({ heirachy }) => ({
+    className: `flex flex-row-reverse mb-12 pb-3 px-3 w-auto justify-center
+                ${heirachy === 3 ? 'shadow-lg' : ''}`
+}))`
+    background: ${props => props.bg};
 `
 
 
@@ -65,49 +75,85 @@ export default ({ state }) => {
     }, [state.seconds, state.minutes, state.hours, state.days, tick])
 
     return (
-        <div 
-            className="h-full w-full shadow-lg flex flex-col items-center justify-start pt-16"
-            style={{ backgroundColor: state.bgColor }}
-        >
-            <div className="text-xl">
-                {state.title}
-            </div>
+        <div className="h-full w-full shadow-lg relative">
+            {state.bgType === 'solid' ? 
+                <BgContent bg={state.bgColor} /> : null} 
 
-            <div className="flex flex-row-reverse mb-12 w-full justify-center">
-                <RowBox>
-                    <CustomColumnBox>
-                        <LargeText>{`${time.sec < 10 ? "0" : ""}${time.sec}`}</LargeText>
-                        <SmallText>seconds</SmallText>
-                    </CustomColumnBox>
-                </RowBox>
-                <RowBox>
-                    <CustomColumnBox>
-                        <LargeText>{`${time.min < 10 ? "0" : ""}${time.min}`}</LargeText>
-                        <SmallText>minutes</SmallText>
-                    </CustomColumnBox>
-                    <ColonStyle>:</ColonStyle>
-                </RowBox>
-                
-                {state.showHour ? 
-                    (<RowBox>
-                        <CustomColumnBox>
-                            <LargeText>{`${time.hour < 10 ? "0" : ""}${time.hour}`}</LargeText>
-                            <SmallText>hours</SmallText>
+            {state.bgType === 'gradient' ? 
+                <BgContent bg={`linear-gradient(${state.gradientAngle}deg, ${state.gradientFirstColor}, ${state.gradientSecondColor})`} /> : null}
+
+            {state.bgType === 'url' ? 
+                <BgContent bg={`${state.bgColor} url("${state.urlBg}") center/${state.urlBgSize} no-repeat`} /> : null}
+            
+
+            <div className='h-full w-full flex flex-col items-center justify-start pt-16 z-10 relative'>
+                <div className="text-xl">
+                    {state.title}
+                </div>
+
+                <CounterWrapper 
+                    bg={state.counterBgHeirearchy === 3 ? state.counterBgColor : ''}
+                    heirachy={state.counterBgHeirearchy}>
+                    <RowBox>
+                        <CustomColumnBox 
+                            bg={state.counterBgHeirearchy === 2 ? state.counterBgColor : ''}
+                            heirachy={state.counterBgHeirearchy}>
+                            <LargeText 
+                                bg={state.counterBgHeirearchy === 1 ? state.counterBgColor : ''}
+                                heirachy={state.counterBgHeirearchy}>
+                                {`${time.sec < 10 ? "0" : ""}${time.sec}`}
+                            </LargeText>
+                            <SmallText>seconds</SmallText>
+                        </CustomColumnBox>
+                    </RowBox>
+                    <RowBox>
+                        <CustomColumnBox 
+                            bg={state.counterBgHeirearchy === 2 ? state.counterBgColor : ''}
+                            heirachy={state.counterBgHeirearchy}>
+                            <LargeText 
+                                bg={state.counterBgHeirearchy === 1 ? state.counterBgColor : ''}
+                                heirachy={state.counterBgHeirearchy}>
+                                {`${time.min < 10 ? "0" : ""}${time.min}`}
+                            </LargeText>
+                            <SmallText>minutes</SmallText>
                         </CustomColumnBox>
                         <ColonStyle>:</ColonStyle>
                     </RowBox>
-                ) : null}
-                {state.showDay ? 
-                    (<RowBox>
-                        <CustomColumnBox>
-                            <LargeText>{`${time.day < 10 ? "0" : ""}${time.day}`}</LargeText>
-                            <SmallText>days</SmallText>
-                        </CustomColumnBox>
-                        <ColonStyle>:</ColonStyle>
-                    </RowBox>
-                ) : null}
+                    
+                    {state.showHour ? 
+                        (<RowBox >
+                            <CustomColumnBox 
+                                bg={state.counterBgHeirearchy === 2 ? state.counterBgColor : ''} 
+                                heirachy={state.counterBgHeirearchy}>
+                                <LargeText 
+                                    bg={state.counterBgHeirearchy === 1 ? state.counterBgColor : ''}
+                                    heirachy={state.counterBgHeirearchy}>
+                                    {`${time.hour < 10 ? "0" : ""}${time.hour}`}
+                                </LargeText>
+                                <SmallText>hours</SmallText>
+                            </CustomColumnBox>
+                            <ColonStyle>:</ColonStyle>
+                        </RowBox>
+                    ) : null}
+
+                    {state.showDay ? 
+                        (<RowBox>
+                            <CustomColumnBox 
+                                bg={state.counterBgHeirearchy === 2 ? state.counterBgColor : ''}
+                                heirachy={state.counterBgHeirearchy}>
+                                <LargeText 
+                                    bg={state.counterBgHeirearchy === 1 ? state.counterBgColor : ''}
+                                    heirachy={state.counterBgHeirearchy}>
+                                    {`${time.day < 10 ? "0" : ""}${time.day}`}
+                                </LargeText>
+                                <SmallText>days</SmallText>
+                            </CustomColumnBox>
+                            <ColonStyle>:</ColonStyle>
+                        </RowBox>
+                    ) : null}
+                </CounterWrapper>
+                {state.showDate ? (<div className="text-md">{state.date}</div>) : null}
             </div>
-            {state.showDate ? (<div className="text-md">{state.date}</div>) : null}
         </div>
     )
 }

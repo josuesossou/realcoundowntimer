@@ -5,17 +5,17 @@ import { faAngleRight, faAngleLeft } from '@fortawesome/free-solid-svg-icons'
 
 const Button = styled.button.attrs({
     className: `transition duration-500 ease-in-out 
-                h-auto w-auto text-gray-300 bg-gray-700
+                 h-auto w-auto text-gray-300 bg-gray-700
                 `
 })`
     outline: 0 !important   
 `
 export const SmallBtn = styled(Button).attrs(({selected}) => ({
-    className: `p-2 bg-gray-700 ${selected ? 'shadow-lg' : ' bg-gray-900'}`
+    className: `p-2 bg-gray-700 relative ${selected ? 'shadow-lg' : ' bg-gray-900'}`
 }))``
 
 export const LongBtn = styled(Button).attrs({
-    className: "p-2 flex justify-start hover:bg-gray-600 shadow-lg"
+    className: "flex justify-start hover:bg-gray-600 shadow-lg relative"
 })``
 
 export const ColumnBox = styled.div.attrs({
@@ -35,8 +35,11 @@ export const InputBox = styled.input.attrs({
 })`
     outline: 0 !important   
 `
-export const TextBoxed = styled.p.attrs({
-    className: "font-bold mb-2"
+export const Text = styled.p.attrs({
+    className: ""
+})``
+export const HeaderText = styled(Text).attrs({
+    className: "mb-2 font-semibold"
 })``
 
 export const Wrapper = styled.div.attrs({
@@ -55,19 +58,38 @@ export const RadioDot = styled.div.attrs(({selected}) => ({
                              'border-2 border-gray-200 w-4 h-4 border-opacity-25'} mr-4`
 }))`
 `
-
-export const RightArrow = styled.div.attrs({
-    className: 'absolute r-3'
+const Arrow = styled.div.attrs({
+    className: `absolute bottom-0 top-0 h-full w-2/12 z-10 flex justify-center 
+                items-center cursor-pointer text-gray-300 `
 })``
 
-export const LeftArrow = styled.div.attrs({
-    className: 'absolute l-3 h-full w-4/12 z-10'
+export const RightArrow = styled(Arrow).attrs({
+    className: 'right-0'
+})``
+
+export const LeftArrow = styled(Arrow).attrs({
+    className: 'left-0'
 })``
 
 export const ColorPickerBg = styled.div.attrs({
-    className: 'h-full w-full'
+    className: 'w-10/12 h-10 relative top-0 left-0'
 })`
     background-color: ${props => props.bgColor}
 `
-export const AngleRightIcon = <FontAwesomeIcon icon={faAngleRight} />
-export const AngleLeftIcon = <FontAwesomeIcon icon={faAngleLeft} />
+
+export const BgContent = styled.div.attrs({
+    className: 'w-full h-full absolute top-0 bottom-0 left-0 right-0 bg-yellow-600 z-0'
+})`
+    // z-index: -1;
+    background: ${props=> props.bg}
+`
+export const Separator = styled.p.attrs({
+    className: 'mb-5'
+})``
+
+export const Hr = styled.div.attrs({
+    className: 'border border-1 border-gray-700 '
+})``
+
+export const AngleRightIcon = () => <FontAwesomeIcon icon={faAngleRight} />
+export const AngleLeftIcon = () => <FontAwesomeIcon icon={faAngleLeft} />

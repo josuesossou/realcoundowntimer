@@ -1,6 +1,11 @@
 import React from 'react'
+import styled from "styled-components"
 import { SmallBtn, LongBtn, CustomColumnBox, RowBox,
-    InputBox, TextBoxed, Wrapper, AngleRightIcon } from './Shared'
+    InputBox, HeaderText, Wrapper, AngleRightIcon, RightArrow } from './Shared'
+
+const LongBtnPad = styled(LongBtn).attrs({
+    className: 'p-2'
+})``
 
 export default ({ state, updateState, updateCurrent }) => {
     const { 
@@ -22,7 +27,7 @@ export default ({ state, updateState, updateCurrent }) => {
     return (
         <Wrapper>
             <CustomColumnBox>
-                <TextBoxed>Title</TextBoxed>
+                <HeaderText>Title</HeaderText>
                 <InputBox 
                     className="py-2"
                     type='text'
@@ -30,27 +35,34 @@ export default ({ state, updateState, updateCurrent }) => {
                     onChange={(e) => updateState({...state, title: e.target.value})}
                 />
             </CustomColumnBox>
+
             <CustomColumnBox>
-            <TextBoxed>Time</TextBoxed>
+            <HeaderText>Time</HeaderText>
                 <RowBox>
                     <InputBox 
                         type="number" 
                         className="w-1/4 mr-3" 
                         min={0} max={99} 
                         defaultValue={days}
-                        onChange={(e) => updateState({...state, days: e.target.value})}
+                        onKeyDown={e => e.preventDefault()}
+                        onChange={(e) => {
+                            e.preventDefault()
+                            updateState({...state, days: e.target.value})
+                        }}
                     /> 
                     <InputBox 
                         type="number" 
                         className="w-1/4 mr-3" 
                         min={0} max={23} 
+                        onKeyDown={e => e.preventDefault()}
                         defaultValue={hours}
-                        onChange={(e) => updateState({...state, hours: e.target.value})}
+                        onChange={(e) => {updateState({...state, hours: e.target.value})}}
                     /> 
                     <InputBox 
                         type="number" 
                         className="w-1/4 mr-3" 
                         min={0} max={59} 
+                        onKeyDown={e => e.preventDefault()}
                         defaultValue={minutes}
                         // value={} 
                         onChange={(e) => updateState({...state, minutes: e.target.value})}
@@ -59,25 +71,29 @@ export default ({ state, updateState, updateCurrent }) => {
                         type="number" 
                         className="w-1/4" 
                         min={0} max={59} 
+                        onKeyDown={e => e.preventDefault()}
                         defaultValue={seconds}
                         onChange={(e) => updateState({...state, seconds: e.target.value})}
                     />
                 </RowBox>
             </CustomColumnBox>
+
             <CustomColumnBox>
-                <TextBoxed>Date</TextBoxed>
+                <HeaderText>Date</HeaderText>
                 <InputBox 
                     type="date" 
                     defaultValue={date}
                     className="py-2"
+                    onKeyDown={e => e.preventDefault()}
                     onChange={(e) => {
                         const date = new Date(e.target.valueAsNumber).toLocaleString('en-US', dateOptions)
                         updateState({...state, date})
                     }}
                 />
             </CustomColumnBox>
+
             <CustomColumnBox>
-                <TextBoxed>Hide</TextBoxed>
+                <HeaderText>Hide</HeaderText>
                 <RowBox>
                     <SmallBtn
                         className="w-1/3" 
@@ -98,29 +114,51 @@ export default ({ state, updateState, updateCurrent }) => {
                     >Date</SmallBtn> 
                 </RowBox>
             </CustomColumnBox>
+
             <CustomColumnBox>
-                <TextBoxed>Display</TextBoxed> {/*  (Text to show when time reached) */}
+                <HeaderText>Display</HeaderText> {/*  (Text to show when time reached) */}
             </CustomColumnBox>
+
             <CustomColumnBox>
-                <LongBtn 
+                <LongBtnPad 
                     onClick={() => {
                         state.history.push('Background')
                         updateState({...state, navLink: 'Background'})
                     }}
                 >
                     Background
-                </LongBtn>
+                    <RightArrow>
+                        <AngleRightIcon />
+                    </RightArrow>
+                </LongBtnPad>
             </CustomColumnBox>
+
             <CustomColumnBox>
-                <LongBtn
+                <LongBtnPad 
+                    onClick={() => {
+                        state.history.push('Counter Background')
+                        updateState({...state, navLink: 'Counter Background'})
+                    }}
+                >
+                    Counter Background
+                    <RightArrow>
+                        <AngleRightIcon />
+                    </RightArrow>
+                </LongBtnPad>
+            </CustomColumnBox>
+
+            <CustomColumnBox>
+                <LongBtnPad
                     onClick={() => {
                         state.history.push('Text')
-                        updateCurrent({...state, navLink: 'Text'})
+                        updateState({...state, navLink: 'Text'})
                     }}
                 >
                     Text
-                    
-                </LongBtn>
+                    <RightArrow>
+                        <AngleRightIcon />
+                    </RightArrow>
+                </LongBtnPad>
             </CustomColumnBox>
         </Wrapper>
     )

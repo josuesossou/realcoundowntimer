@@ -28,7 +28,14 @@ export default () => {
         counterBgColor: '#fff',
         colorToUpdate: 'bgColor',
         bgColor: '#888888',
-        
+        bgType: 'solid',
+        gradientFirstColor: '#888888',
+        gradientSecondColor: '#888888',
+        gradientAngle: 180,
+        urlBg: '',
+        urlBgSize: 'cover',
+        counterBgColor: '#888888',
+        counterBgHeirearchy: 0
     })
 
     return (
