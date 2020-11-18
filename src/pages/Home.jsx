@@ -36,7 +36,7 @@ export default () => {
         colorToUpdate: 'bgColor',
         bgColor: '#888888',
         bgType: 'solid',
-        gradientFirstColor: '#888888',
+        gradientFirstColor: '#D87373',
         gradientSecondColor: '#888888',
         gradientAngle: 180,
         urlBg: '',
