@@ -11,7 +11,7 @@ export default () => {
     useEffect(() => {
         WebFont.load({
             google: {
-              families: ['Droid Sans', 'Alfa Slab One']
+              families: ['Droid Sans', 'Racing Sans One']
             }
         })
     }, [])

@@ -18,8 +18,8 @@ export default ({ state }) => {
 
     return (
         <div className="h-20 w-full bg-gray-200 relative flex items-center justify-between px-20">
-            <div style={{ fontFamily: 'Alfa Slab One', fontSize: '1.5em' }} className="text-gray-400">
-                CDTimer 
+            <div style={{ fontFamily: 'Racing Sans One', fontSize: '1.5em' }} className="text-gray-500">
+                CDTimer
             </div>
 
             <Link onClick={onPublishing} to='/countdown-page' target='_blank'>
