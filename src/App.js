@@ -15,6 +15,9 @@ function App() {
         <Route exact path='/countdown-page'>
           <CountDownPage />
         </Route>
+        <Route exact path='/countdown-page/prev'>
+          <div>hello word</div>
+        </Route>
     </Router>
     
   );
