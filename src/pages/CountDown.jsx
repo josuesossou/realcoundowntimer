@@ -8,11 +8,11 @@ export default () => {
     useEffect(() => {
         const savedState = JSON.parse(localStorage.getItem('state'));
         if (savedState) {
-        WebFont.load({
-            google: {
-              families: [savedState.fontFamily]
-            }
-        })
+            WebFont.load({
+                google: {
+                families: [savedState.fontFamily]
+                }
+            })
 
             setState(savedState)
         }
