@@ -10,3 +10,33 @@
 .flexbox-fix{
     border: 0 !important;
 }
+
+div[id^=font-picker] {
+    width: 100% !important;
+    background-color: #4a5568 !important;
+    color: #e2e8f0 !important;
+    box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05) !important;
+}
+div[id^=font-picker] .dropdown-button {
+    padding: 0.5rem !important;
+}
+div[id^=font-picker] .dropdown-button, div[id^=font-picker] ul {
+    height: auto !important;
+    background-color: #4a5568 !important;
+}
+div[id^=font-picker] ul li button.active-font {
+    background: #1a202c !important;
+}
+
+div[id^=font-picker] ul li button:hover {
+    background: #718096 !important;
+}
+div[id^=font-picker] .dropdown-icon.finished::before {
+    border-top: 6px solid #e2e8f0 !important;
+}
+div[id^=font-picker].expanded ul {
+    max-height: 50vh !important;
+}
+div[id^=font-picker] ul::-webkit-scrollbar {
+    display: none;
+}

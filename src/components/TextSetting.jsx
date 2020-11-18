@@ -1,11 +1,11 @@
-import React from 'react'
+import React, { useEffect } from 'react'
+import FontPicker from "font-picker-react";
+import fontStr from '../fonts.js'
 import { 
-    RadioDot, 
     LongBtn, 
     CustomColumnBox, 
     RightArrow, 
     AngleRightIcon,
-    RadioSelection, 
     ColorPickerBg, 
     HeaderText, 
     Wrapper, 
@@ -13,8 +13,9 @@ import {
 } from './Shared'
 
 export default ({ state, updateState}) => {
-    return (
-        
+    const fontsArray = fontStr.split('\n')
+
+    return (  
         <Wrapper>
             <CustomColumnBox>
                 <HeaderText>Text Color</HeaderText>
@@ -29,6 +30,20 @@ export default ({ state, updateState}) => {
                         <AngleRightIcon />
                     </RightArrow>
                 </LongBtn>
+
+                <Separator />
+
+                <HeaderText>Fonts</HeaderText>
+                <FontPicker
+					apiKey="AIzaSyCxhfAU4B8V5whdC-ay_SI5Bh3fCGGjOks"
+					activeFontFamily={state.fontFamily}
+					onChange={(font) =>
+						updateState({ ...state, fontFamily: font.family })
+                    }
+                    families={fontsArray}
+                    limit={348}
+                    className='w-full bg-gray-700'
+				/>
             </CustomColumnBox>
         </Wrapper>
     )

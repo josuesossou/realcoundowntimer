@@ -1,6 +1,6 @@
 import React from 'react'
 import styled from "styled-components"
-import { SmallBtn, LongBtn, CustomColumnBox, RowBox,
+import { SmallBtn, LongBtn, CustomColumnBox, RowBox, Separator,
     InputBox, HeaderText, Wrapper, AngleRightIcon, RightArrow } from './Shared'
 
 const LongBtnPad = styled(LongBtn).attrs({
@@ -115,9 +115,11 @@ export default ({ state, updateState, updateCurrent }) => {
                 </RowBox>
             </CustomColumnBox>
 
-            <CustomColumnBox>
-                <HeaderText>Display</HeaderText> {/*  (Text to show when time reached) */}
-            </CustomColumnBox>
+            {/* <CustomColumnBox>
+                <HeaderText>Display</HeaderText>  (Text to show when time reached) 
+            </CustomColumnBox> */}
+
+            <CustomColumnBox />
 
             <CustomColumnBox>
                 <LongBtnPad 

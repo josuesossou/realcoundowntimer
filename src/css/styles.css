@@ -10596,31 +10596,23 @@ video {
 }
 
 .text-xm {
-  font-size: 1.125rem;
+  font-size: 1.125em;
 }
 
 .text-sm {
-  font-size: 1.9rem;
+  font-size: 1.9em;
 }
 
 .text-md {
-  font-size: 2.25rem;
+  font-size: 2.25em;
 }
 
 .text-lg {
-  font-size: 3.5rem;
+  font-size: 3.5em;
 }
 
 .text-xl {
-  font-size: 4rem;
-}
-
-.text-2xl {
-  font-size: 6rem;
-}
-
-.text-3xl {
-  font-size: 8rem;
+  font-size: 4em;
 }
 
 .leading-3 {
@@ -19282,6 +19274,11 @@ video {
 
 .animate-bounce {
   animation: bounce 1s infinite;
+}
+
+* {
+  font-size: 100%;
+  box-sizing: border-box;
 }
 
 @media (min-width: 640px) {
@@ -29304,31 +29301,23 @@ video {
   }
 
   .sm\:text-xm {
-    font-size: 1.125rem;
+    font-size: 1.125em;
   }
 
   .sm\:text-sm {
-    font-size: 1.9rem;
+    font-size: 1.9em;
   }
 
   .sm\:text-md {
-    font-size: 2.25rem;
+    font-size: 2.25em;
   }
 
   .sm\:text-lg {
-    font-size: 3.5rem;
+    font-size: 3.5em;
   }
 
   .sm\:text-xl {
-    font-size: 4rem;
-  }
-
-  .sm\:text-2xl {
-    font-size: 6rem;
-  }
-
-  .sm\:text-3xl {
-    font-size: 8rem;
+    font-size: 4em;
   }
 
   .sm\:leading-3 {
@@ -47982,31 +47971,23 @@ video {
   }
 
   .md\:text-xm {
-    font-size: 1.125rem;
+    font-size: 1.125em;
   }
 
   .md\:text-sm {
-    font-size: 1.9rem;
+    font-size: 1.9em;
   }
 
   .md\:text-md {
-    font-size: 2.25rem;
+    font-size: 2.25em;
   }
 
   .md\:text-lg {
-    font-size: 3.5rem;
+    font-size: 3.5em;
   }
 
   .md\:text-xl {
-    font-size: 4rem;
-  }
-
-  .md\:text-2xl {
-    font-size: 6rem;
-  }
-
-  .md\:text-3xl {
-    font-size: 8rem;
+    font-size: 4em;
   }
 
   .md\:leading-3 {
@@ -66660,31 +66641,23 @@ video {
   }
 
   .lg\:text-xm {
-    font-size: 1.125rem;
+    font-size: 1.125em;
   }
 
   .lg\:text-sm {
-    font-size: 1.9rem;
+    font-size: 1.9em;
   }
 
   .lg\:text-md {
-    font-size: 2.25rem;
+    font-size: 2.25em;
   }
 
   .lg\:text-lg {
-    font-size: 3.5rem;
+    font-size: 3.5em;
   }
 
   .lg\:text-xl {
-    font-size: 4rem;
-  }
-
-  .lg\:text-2xl {
-    font-size: 6rem;
-  }
-
-  .lg\:text-3xl {
-    font-size: 8rem;
+    font-size: 4em;
   }
 
   .lg\:leading-3 {
@@ -85338,31 +85311,23 @@ video {
   }
 
   .xl\:text-xm {
-    font-size: 1.125rem;
+    font-size: 1.125em;
   }
 
   .xl\:text-sm {
-    font-size: 1.9rem;
+    font-size: 1.9em;
   }
 
   .xl\:text-md {
-    font-size: 2.25rem;
+    font-size: 2.25em;
   }
 
   .xl\:text-lg {
-    font-size: 3.5rem;
+    font-size: 3.5em;
   }
 
   .xl\:text-xl {
-    font-size: 4rem;
-  }
-
-  .xl\:text-2xl {
-    font-size: 6rem;
-  }
-
-  .xl\:text-3xl {
-    font-size: 8rem;
+    font-size: 4em;
   }
 
   .xl\:leading-3 {

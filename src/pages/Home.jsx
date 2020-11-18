@@ -1,13 +1,20 @@
-import React, { useState } from 'react'
-import "../css/custom.css"
+import React, { useState, useEffect } from 'react'
 import { Main, SidePanel, BottomPanel } from '../components/components'
+import WebFont from 'webfontloader'
+import "../css/custom.css"
 
 export default () => {
     const dateString = Date.now()
     const dateOptions = { year: 'numeric', month: 'long', day: 'numeric' }
     const date = new Date(dateString).toLocaleString('en-US', dateOptions)
 
-    console.log(date)
+    useEffect(() => {
+        WebFont.load({
+            google: {
+              families: ['Droid Sans', 'Alfa Slab One']
+            }
+        })
+    }, [])
 
     const [state, setState] = useState({
         showDay: true,
@@ -36,7 +43,8 @@ export default () => {
         urlBgSize: 'cover',
         counterBgColor: '#888888',
         counterBgHeirearchy: 0,
-        textColor: '#000'
+        textColor: '#000',
+        fontFamily: 'Droid Sans'
     })
 
     return (
@@ -44,11 +52,11 @@ export default () => {
             <div className="w-1/5">
                 <SidePanel state={state} updateState={setState} />
             </div>
-            <div className="flex flex-col flex-1 h-full">
-                <div className="p-16 w-full h-full bg-gray-100">
-                    <Main state={state} />
+            <div className="flex flex-col w-4/5 h-full relative">
+                <div className="flex-1 bg-gray-100">
+                    <Main state={state} className="" />
                 </div>
-                <BottomPanel />
+                <BottomPanel state={state} className="" />
             </div>
         </div>
     );

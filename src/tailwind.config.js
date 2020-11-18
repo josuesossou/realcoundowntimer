@@ -2,13 +2,11 @@ module.exports = {
   // important: true,
   theme: {
     fontSize: {
-      'xm': '1.125rem',
-      'sm': '1.9rem',
-      'md': '2.25rem',
-      'lg': '3.5rem',
-      'xl': '4rem',
-      '2xl': '6rem',
-      '3xl' : '8rem'
+      'xm': '1.125em',
+      'sm': '1.9em',
+      'md': '2.25em',
+      'lg': '3.5em',
+      'xl': '4em',
     },
     borderWidth: {
       default: '1px',

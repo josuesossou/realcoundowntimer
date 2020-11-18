@@ -3,7 +3,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faAngleRight, faAngleLeft, faArrowLeft } from '@fortawesome/free-solid-svg-icons'
 
 
-const Button = styled.button.attrs({
+export const Button = styled.button.attrs({
     className: `transition duration-500 ease-in-out 
                  h-auto w-auto text-gray-300 bg-gray-700
                 `
@@ -83,7 +83,7 @@ export const BgContent = styled.div.attrs({
     // z-index: -1;
     background: ${props=> props.bg}
 `
-export const Separator = styled.p.attrs({
+export const Separator = styled.div.attrs({
     className: 'mb-5'
 })``
 

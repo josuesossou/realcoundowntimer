@@ -5,6 +5,7 @@ import BackgroundSetting from './BackgroundSetting'
 import CounterBackgroundSetting from './CounterBackgroundSetting'
 import TextSetting from './TextSetting'
 import ColorPicker from './ColorPicker'
+import FontSetting from './FontSetting'
 
 /* eslint import/no-anonymous-default-export: [2, {"allowArrowFunction": true}] */
 export default ({ updateState, state }) => {
@@ -39,6 +40,9 @@ export default ({ updateState, state }) => {
 
             {state.navLink === 'Color' ?
                 <ColorPicker updateState={updateState} state={state} /> : null}
+            
+            {state.navLink === 'Font' ?
+                <FontSetting updateState={updateState} state={state} /> : null}
         </div>
     )
 }
