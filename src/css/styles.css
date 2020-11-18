@@ -19276,11 +19276,6 @@ video {
   animation: bounce 1s infinite;
 }
 
-* {
-  font-size: 100%;
-  box-sizing: border-box;
-}
-
 @media (min-width: 640px) {
   .sm\:container {
     width: 100%;

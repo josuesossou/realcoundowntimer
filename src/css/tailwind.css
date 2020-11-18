@@ -4,8 +4,3 @@
 @tailwind components;
 
 @tailwind utilities;
-
-* {
-    font-size: 100%;
-    box-sizing: border-box;
-}

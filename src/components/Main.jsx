@@ -3,9 +3,10 @@ import { RowBox, ColumnBox, BgContent } from './Shared'
 import styled from 'styled-components'
 
 const CustomColumnBox = styled(ColumnBox).attrs(({ heirachy }) => ({
-    className: `items-center relative w-1/5
+    className: `items-center relative w-1/5 px-2
                 ${heirachy === 2 ? 'shadow-lg' : ''}`
 }))`
+    box-sizing: content-box;
     background: ${props => props.bg};
 `
 const SmallText = styled.div.attrs({
@@ -14,25 +15,25 @@ const SmallText = styled.div.attrs({
     line-height: normal;
 `
 const LargeText = styled.div.attrs(({ heirachy }) => ({
-    className: `p-0 m-0 mb-3 relative text-center w-full
+    className: `p-0 m-0 mb-3 relative text-center w-full px-2
                 ${heirachy === 1 ? 'shadow-lg' : ''}`
 }))`
+    box-sizing: content-box;
     line-height: normal;
+    font-size: 8vw;
     background: ${props => props.bg};
-    font-size: 8vw;
 `
-const ColonStyle = styled.p.attrs({
-    className: ""
-})`
-    line-height: normal;
-    font-size: 8vw;
-`
-const CounterWrapper = styled.div.attrs(({ heirachy }) => ({
-    className: `flex flex-row-reverse mb-20 pb-3 px-3 w-11/12 justify-between
-                 ${heirachy === 3 ? 'shadow-lg' : ''}`
+const ColonStyle = styled.p.attrs(({ heirachy }) => ({
+    className: `px-2`
 }))`
+    line-height: normal;
+    font-size: 8vw;
     background: ${props => props.bg};
-
+`
+const CounterWrapper = styled.div.attrs({
+    className: `flex flex-row-reverse mb-20 pb-3 px-3 w-11/12 justify-center`
+})`
+    box-sizing: content-box;
 `
 const CountDownWrapper = styled.div.attrs({
     className: 'h-full w-full flex flex-col items-center justify-center z-10 relative'
@@ -100,27 +101,31 @@ export default ({ state }) => {
                 </div>
 
                 <CounterWrapper 
-                    bg={state.counterBgHeirearchy === 3 ? state.counterBgColor : ''}
-                    heirachy={state.counterBgHeirearchy}>
+                    // bg={state.counterBgHeirearchy === 3 ? state.counterBgColor : ''}
+                    // heirachy={state.counterBgHeirearchy}
+                    >
                     
                     <CustomColumnBox 
-                        bg={state.counterBgHeirearchy === 2 ? state.counterBgColor : ''}
+                        bg={state.counterBgHeirearchy >= 2 ? state.counterBgColor : ''}
                         heirachy={state.counterBgHeirearchy}>
                         <LargeText 
-                            bg={state.counterBgHeirearchy === 1 ? state.counterBgColor : ''}
+                            bg={state.counterBgHeirearchy >= 1 ? state.counterBgColor : ''}
                             heirachy={state.counterBgHeirearchy}>
                             {`${time.sec < 10 ? "0" : ""}${time.sec}`}
                         </LargeText>
                         <SmallText>seconds</SmallText>
                     </CustomColumnBox>
                 
-                    <ColonStyle>:</ColonStyle>
+                    <ColonStyle
+                        bg={state.counterBgHeirearchy >= 3 ? state.counterBgColor : ''}
+                        heirachy={state.counterBgHeirearchy}
+                    >:</ColonStyle>
                     
                     <CustomColumnBox 
-                        bg={state.counterBgHeirearchy === 2 ? state.counterBgColor : ''}
+                        bg={state.counterBgHeirearchy >= 2 ? state.counterBgColor : ''}
                         heirachy={state.counterBgHeirearchy}>
                         <LargeText 
-                            bg={state.counterBgHeirearchy === 1 ? state.counterBgColor : ''}
+                            bg={state.counterBgHeirearchy >= 1 ? state.counterBgColor : ''}
                             heirachy={state.counterBgHeirearchy}>
                             {`${time.min < 10 ? "0" : ""}${time.min}`}
                         </LargeText>
@@ -129,12 +134,15 @@ export default ({ state }) => {
                     
                     {state.showHour ? 
                         (<>
-                            <ColonStyle>:</ColonStyle>
+                            <ColonStyle
+                                bg={state.counterBgHeirearchy >= 3 ? state.counterBgColor : ''}
+                                heirachy={state.counterBgHeirearchy}
+                            >:</ColonStyle>
                             <CustomColumnBox 
-                                bg={state.counterBgHeirearchy === 2 ? state.counterBgColor : ''} 
+                                bg={state.counterBgHeirearchy >= 2 ? state.counterBgColor : ''} 
                                 heirachy={state.counterBgHeirearchy}>
                                 <LargeText 
-                                    bg={state.counterBgHeirearchy === 1 ? state.counterBgColor : ''}
+                                    bg={state.counterBgHeirearchy >= 1 ? state.counterBgColor : ''}
                                     heirachy={state.counterBgHeirearchy}>
                                     {`${time.hour < 10 ? "0" : ""}${time.hour}`}
                                 </LargeText>
@@ -145,12 +153,15 @@ export default ({ state }) => {
 
                     {state.showDay ? 
                         (<>
-                            <ColonStyle>:</ColonStyle>
+                            <ColonStyle
+                                bg={state.counterBgHeirearchy >= 3 ? state.counterBgColor : ''}
+                                heirachy={state.counterBgHeirearchy}
+                            >:</ColonStyle>
                             <CustomColumnBox 
-                                bg={state.counterBgHeirearchy === 2 ? state.counterBgColor : ''}
+                                bg={state.counterBgHeirearchy >= 2 ? state.counterBgColor : ''}
                                 heirachy={state.counterBgHeirearchy}>
                                 <LargeText 
-                                    bg={state.counterBgHeirearchy === 1 ? state.counterBgColor : ''}
+                                    bg={state.counterBgHeirearchy >= 1 ? state.counterBgColor : ''}
                                     heirachy={state.counterBgHeirearchy}>
                                     {`${time.day < 10 ? "0" : ""}${time.day}`}
                                 </LargeText>
