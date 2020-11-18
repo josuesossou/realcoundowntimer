@@ -12,7 +12,9 @@ export default () => {
               families: [savedState.fontFamily]
             }
         })
-        setState(savedState)
+        if (savedState) {
+            setState(savedState)
+        }
     }, [])
     
     return (
