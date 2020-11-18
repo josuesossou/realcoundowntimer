@@ -1,9 +1,10 @@
 import React, { useEffect, useState } from 'react'
+import InitState from '../initState'
 import WebFont from 'webfontloader'
 import Main from '../components/Main'
 
 export default () => {
-    const [state, setState] = useState(null);
+    const [state, setState] = useState(InitState);
     useEffect(() => {
         const savedState = JSON.parse(localStorage.getItem('state'));
         WebFont.load({
