@@ -8,14 +8,14 @@ import {
 function App() {
   return (
     <Router>
-        <Route exact path='/'>
+        <Route path='/'>
           <Home />
         </Route>
 
-        <Route exact path='/countdown-page/'>
+        <Route path='/countdown-page'>
           <CountDownPage />
         </Route>
-        <Route exact path='/countdown-page/prev/'>
+        <Route path='/countdown-page/prev'>
           <div>hello word</div>
         </Route>
     </Router>
