@@ -12,10 +12,10 @@ function App() {
           <Home />
         </Route>
 
-        <Route exact path='/countdown-page'>
+        <Route exact path='/countdown-page/'>
           <CountDownPage />
         </Route>
-        <Route exact path='/countdown-page/prev'>
+        <Route exact path='/countdown-page/prev/'>
           <div>hello word</div>
         </Route>
     </Router>
