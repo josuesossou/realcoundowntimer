@@ -73,7 +73,7 @@ export default ({ state }) => {
 
         setTime({sec: newSec, min: newMin, hour: newHour, day: newDay})
 
-        if (newSec !== 0 || newMin !== 0 || newHour !== 0 || newDay !== 0) {
+        if (newSec > 0 || newMin > 0 || newHour > 0 || newDay > 0) {
             timer.current = setTimeout(() => tick(newSec, newMin, newHour, newDay), 1000)
         }
     }, [])
@@ -100,10 +100,7 @@ export default ({ state }) => {
                     {state.title}
                 </div>
 
-                <CounterWrapper 
-                    // bg={state.counterBgHeirearchy === 3 ? state.counterBgColor : ''}
-                    // heirachy={state.counterBgHeirearchy}
-                    >
+                <CounterWrapper>
                     
                     <CustomColumnBox 
                         bg={state.counterBgHeirearchy >= 2 ? state.counterBgColor : ''}

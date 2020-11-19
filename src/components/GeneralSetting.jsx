@@ -1,13 +1,14 @@
 import React from 'react'
 import styled from "styled-components"
-import { SmallBtn, LongBtn, CustomColumnBox, RowBox, Separator,
+import moment from 'moment'
+import { SmallBtn, LongBtn, CustomColumnBox, RowBox,
     InputBox, HeaderText, Wrapper, AngleRightIcon, RightArrow } from './Shared'
 
 const LongBtnPad = styled(LongBtn).attrs({
     className: 'p-2'
 })``
 
-export default ({ state, updateState, updateCurrent }) => {
+export default ({ state, updateState }) => {
     const { 
         title, 
         days, 
@@ -18,11 +19,16 @@ export default ({ state, updateState, updateCurrent }) => {
         dateOptions
     } = state
 
-    const year = new Date(dateString).getFullYear()
-    const month = new Date(dateString).getMonth()
-    const day = new Date(dateString).getDate()
-    const date = `${year}-${month}-${day}`
+    // const dateString = Date.now()
+    // const year = new Date(dateString).getHours()
+    // const month = new Date(dateString).getUTCMonth()
+    // const day = new Date(dateString).getUTCDay()
+    // const date = `${year}-${month}-${day}`
+    const reg = /[^0-9AMP]+/
+    const d = new Date(dateString).toLocaleString().split(reg)
 
+    const today = `${d[2]}-${d[0]}-${d[1]}T${d[3]<10? '0'+d[3]:d[3]}:${d[4]}`
+    // console.log(d, today)
 
     return (
         <Wrapper>
@@ -43,19 +49,21 @@ export default ({ state, updateState, updateCurrent }) => {
                         type="number" 
                         className="w-1/4 mr-3" 
                         min={0} max={99} 
-                        defaultValue={days}
+                        // defaultValue={days}
                         onKeyDown={e => e.preventDefault()}
+                        value={days}
                         onChange={(e) => {
                             e.preventDefault()
                             updateState({...state, days: e.target.value})
                         }}
                     /> 
-                    <InputBox 
+                    <InputBox
                         type="number" 
                         className="w-1/4 mr-3" 
                         min={0} max={23} 
                         onKeyDown={e => e.preventDefault()}
-                        defaultValue={hours}
+                        // defaultValue={hours}
+                        value={hours}
                         onChange={(e) => {updateState({...state, hours: e.target.value})}}
                     /> 
                     <InputBox 
@@ -63,8 +71,8 @@ export default ({ state, updateState, updateCurrent }) => {
                         className="w-1/4 mr-3" 
                         min={0} max={59} 
                         onKeyDown={e => e.preventDefault()}
-                        defaultValue={minutes}
-                        // value={} 
+                        // defaultValue={minutes}
+                        value={minutes}
                         onChange={(e) => updateState({...state, minutes: e.target.value})}
                     />
                     <InputBox 
@@ -72,7 +80,8 @@ export default ({ state, updateState, updateCurrent }) => {
                         className="w-1/4" 
                         min={0} max={59} 
                         onKeyDown={e => e.preventDefault()}
-                        defaultValue={seconds}
+                        // defaultValue={seconds}
+                        value={seconds}
                         onChange={(e) => updateState({...state, seconds: e.target.value})}
                     />
                 </RowBox>
@@ -81,13 +90,19 @@ export default ({ state, updateState, updateCurrent }) => {
             <CustomColumnBox>
                 <HeaderText>Date</HeaderText>
                 <InputBox 
-                    type="date" 
-                    defaultValue={date}
+                    type="datetime-local"
+                    min={today}
+                    defaultValue={today}
                     className="py-2"
                     onKeyDown={e => e.preventDefault()}
                     onChange={(e) => {
-                        const date = new Date(e.target.valueAsNumber).toLocaleString('en-US', dateOptions)
-                        updateState({...state, date})
+                        const arr = e.target.value.split(reg)
+                        const date = new Date(arr[0], arr[1]-1, arr[2]).toLocaleDateString('en-US', dateOptions)
+                        const days = moment(e.target.value).diff(moment(today), 'days');
+                        const h =  Number(arr[3])-d[3]
+                        const m =  Number(arr[4])-d[4]
+                        console.log(arr)
+                        updateState({...state, date, days, hours: h<0? 24+h:h, minutes: m<0? 60+m:m })
                     }}
                 />
             </CustomColumnBox>

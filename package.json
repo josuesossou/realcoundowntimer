@@ -12,6 +12,7 @@
     "autoprefixer": "^10.0.2",
     "babel-plugin-macros": "^2.8.0",
     "font-picker-react": "^3.5.2",
+    "moment": "^2.29.1",
     "postcss": "^8.1.7",
     "postcss-cli": "^8.2.0",
     "react": "^17.0.1",
