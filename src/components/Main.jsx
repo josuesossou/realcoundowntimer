@@ -48,6 +48,8 @@ export default ({ state }) => {
     let timer = useRef()
     const tick = useCallback((secs, mins, hrs, days) => {
         let newSec = secs, newMin = mins, newHour = hrs, newDay = days
+        setTime({sec: newSec, min: newMin, hour: newHour, day: newDay})
+
         newSec = secs-1
 
         if (secs <= 0) {
@@ -71,10 +73,12 @@ export default ({ state }) => {
             }
         }
 
-        setTime({sec: newSec, min: newMin, hour: newHour, day: newDay})
-
         if (newSec > 0 || newMin > 0 || newHour > 0 || newDay > 0) {
             timer.current = setTimeout(() => tick(newSec, newMin, newHour, newDay), 1000)
+        }
+
+        if (newSec <= 0 && newMin <= 0 && newHour <= 0 && newDay <= 0) {
+            setTime({sec: 0, min: 0, hour: 0, day: 0})
         }
     }, [])
 

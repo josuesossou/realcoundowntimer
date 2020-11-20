@@ -14,16 +14,11 @@ export default ({ state, updateState }) => {
         days, 
         hours, 
         seconds, 
-        minutes, 
+        minutes,
         dateString,
         dateOptions
     } = state
 
-    // const dateString = Date.now()
-    // const year = new Date(dateString).getHours()
-    // const month = new Date(dateString).getUTCMonth()
-    // const day = new Date(dateString).getUTCDay()
-    // const date = `${year}-${month}-${day}`
     const reg = /[^0-9AMP]+/
     const d = new Date(dateString).toLocaleString().split(reg)
 
@@ -102,7 +97,7 @@ export default ({ state, updateState }) => {
                         const h =  Number(arr[3])-d[3]
                         const m =  Number(arr[4])-d[4]
                         console.log(arr)
-                        updateState({...state, date, days, hours: h<0? 24+h:h, minutes: m<0? 60+m:m })
+                        updateState({ ...state, date, days, hours: h<0? 24+h:h, minutes: m<0? 60+m:m })
                     }}
                 />
             </CustomColumnBox>
