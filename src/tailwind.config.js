@@ -2,8 +2,8 @@ module.exports = {
   // important: true,
   theme: {
     fontSize: {
-      'xm': '1.125em',
-      'sm': '1.9em',
+      'xm': '0.925rem',
+      'sm': '1.35em',
       'md': '2.25em',
       'lg': '3.5em',
       'xl': '4em',

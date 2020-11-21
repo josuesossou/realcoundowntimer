@@ -15,12 +15,14 @@ export default () => {
             })
 
             setState(savedState)
+            console.log(savedState)
         }
+
     }, [])
     
     return (
         <div className="h-screen w-screen overflow-hidden">
-            {state ? (<Main state={state} className="w-full h-full" />) : null}
+            {state ? (<Main state={state} updateCache={() => {}} className="w-full h-full" />) : null}
         </div>
     )
 }

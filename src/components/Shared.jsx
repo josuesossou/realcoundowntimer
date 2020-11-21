@@ -1,6 +1,6 @@
 import styled from "styled-components";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faAngleRight, faAngleLeft, faArrowLeft } from '@fortawesome/free-solid-svg-icons'
+import { faAngleRight, faAngleLeft, faArrowLeft, faTimes } from '@fortawesome/free-solid-svg-icons'
 
 
 export const Button = styled.button.attrs({
@@ -19,7 +19,7 @@ export const LongBtn = styled(Button).attrs({
 })``
 
 export const ColumnBox = styled.div.attrs({
-    className: 'flex flex-col'
+    className: 'flex flex-col w-full'
 })``
 
 export const CustomColumnBox = styled(ColumnBox).attrs({
@@ -31,7 +31,7 @@ export const RowBox = styled.div.attrs({
 })``
 
 export const InputBox = styled.input.attrs({
-    className: 'transition duration-500 ease-in-out bg-gray-900 focus:bg-gray-700 text-gray-300 pl-2 py-2'
+    className: 'transition duration-500 ease-in-out bg-gray-900 focus:bg-gray-700 text-gray-300 pl-2 py-2 w-full'
 })`
     outline: 0 !important   
 `
@@ -91,6 +91,22 @@ export const Hr = styled.div.attrs({
     className: 'border border-1 border-gray-700 '
 })``
 
+export const SideBarWraper = styled.div.attrs({
+    className: 'lg:relative absolute sm:w-3/5 w-full lg:w-1/5 h-full z-10 overflow-hidden'
+})`
+    left: ${props => props.left};
+    transition: left .5s cubic-bezier(0.820, 0.085, 0.395, 0.895);
+    @media (min-width: 1024px) { left: 0 }
+`
+
+export const Customize = styled.div.attrs({
+    className: 'absolute lg:hidden bg-gray-200 shadow-lg py-2 px-3' 
+})`
+    left: 2em;
+    top: 1em;
+`
+
 export const AngleRightIcon = () => <FontAwesomeIcon icon={faAngleRight} />
 export const AngleLeftIcon = () => <FontAwesomeIcon icon={faAngleLeft} />
 export const ArrowLeftIcon = () => <FontAwesomeIcon icon={faArrowLeft} />
+export const Close = () => <FontAwesomeIcon icon={faTimes} />

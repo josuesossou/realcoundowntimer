@@ -38,7 +38,7 @@ export default ({ state, updateState }) => {
             </CustomColumnBox>
 
             <CustomColumnBox>
-            <HeaderText>Time</HeaderText>
+                <HeaderText>Time</HeaderText>
                 <RowBox>
                     <InputBox 
                         type="number" 
@@ -148,8 +148,8 @@ export default ({ state, updateState }) => {
             <CustomColumnBox>
                 <LongBtnPad 
                     onClick={() => {
-                        state.history.push('Counter Background')
-                        updateState({...state, navLink: 'Counter Background'})
+                        state.history.push('Counter')
+                        updateState({...state, navLink: 'Counter'})
                     }}
                 >
                     Counter Background

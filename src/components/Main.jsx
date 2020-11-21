@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useRef, useCallback } from 'react'
-import { RowBox, ColumnBox, BgContent } from './Shared'
+import { ColumnBox, BgContent } from './Shared'
 import styled from 'styled-components'
 
 const CustomColumnBox = styled(ColumnBox).attrs(({ heirachy }) => ({
@@ -16,7 +16,7 @@ const SmallText = styled.div.attrs({
 `
 const LargeText = styled.div.attrs(({ heirachy }) => ({
     className: `p-0 m-0 mb-3 relative text-center w-full px-2
-                ${heirachy === 1 ? 'shadow-lg' : ''}`
+                text-${heirachy === 1 ? 'shadow-lg' : ''}`
 }))`
     box-sizing: content-box;
     line-height: normal;
@@ -43,12 +43,18 @@ const CountDownWrapper = styled.div.attrs({
 `
 
 /* eslint import/no-anonymous-default-export: [2, {"allowArrowFunction": true}] */
-export default ({ state }) => {
+export default ({ state, updateCache }) => {
     const [time, setTime] = useState({sec: 0, min: 0, hour: 0, day: 0})
     let timer = useRef()
+
     const tick = useCallback((secs, mins, hrs, days) => {
         let newSec = secs, newMin = mins, newHour = hrs, newDay = days
+
         setTime({sec: newSec, min: newMin, hour: newHour, day: newDay})
+
+        if (state.cache) {
+            updateCache({sec: newSec, min: newMin, hour: newHour, day: newDay})
+        }
 
         newSec = secs-1
 
@@ -79,12 +85,15 @@ export default ({ state }) => {
 
         if (newSec <= 0 && newMin <= 0 && newHour <= 0 && newDay <= 0) {
             setTime({sec: 0, min: 0, hour: 0, day: 0})
+            if (state.cache) {
+                updateCache({ sec: 0, min: 0, hour: 0, day: 0 })
+            }
         }
-    }, [])
+    }, [state.cache, updateCache])
 
     useEffect(() => {
         clearTimeout(timer.current)
-        tick(state.seconds, state.minutes, state.hours, state.days)
+        tick(state.seconds, state.minutes, state.hours, state.days,)
     }, [state.seconds, state.minutes, state.hours, state.days, tick])
 
     return (
@@ -100,7 +109,7 @@ export default ({ state }) => {
             
 
             <CountDownWrapper textColor={state.textColor} fontFamily={`'${state.fontFamily}'`}>
-                <div className="text-xl mb-10">
+                <div className="md:text-xl sm:text-lg text-md mb-10">
                     {state.title}
                 </div>
 
@@ -171,7 +180,8 @@ export default ({ state }) => {
                         </>
                     ) : null}
                 </CounterWrapper>
-                {state.showDate ? (<div className="text-md mt-5">{state.date}</div>) : null}
+                {state.showDate ? 
+                    (<div className=" sm:text-md text-sm mt-5">{state.date}</div>) : null}
             </CountDownWrapper>
         </div>
     )

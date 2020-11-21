@@ -18,7 +18,6 @@ export default {
     dateOptions,
     backgroundType: 'solid', //gradien, url, later upload, and uploadVideo 
     counterBgType: 'none', //group digit each group, all
-    counterBgColor: '#fff',
     colorToUpdate: 'bgColor',
     bgColor: '#888888',
     bgType: 'solid',
@@ -30,5 +29,6 @@ export default {
     counterBgColor: '#888888',
     counterBgHeirearchy: 0,
     textColor: '#000',
-    fontFamily: 'Droid Sans'
+    fontFamily: 'Droid Sans',
+    cache: true
 }

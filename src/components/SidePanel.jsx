@@ -1,5 +1,5 @@
 import React from 'react'
-import { Text, LeftArrow, ArrowLeftIcon } from './Shared'
+import { Text, LeftArrow, RightArrow, ArrowLeftIcon, Close } from './Shared'
 import GeneralSetting from './GeneralSetting'
 import BackgroundSetting from './BackgroundSetting'
 import CounterBackgroundSetting from './CounterBackgroundSetting'
@@ -8,7 +8,7 @@ import ColorPicker from './ColorPicker'
 import FontSetting from './FontSetting'
 
 /* eslint import/no-anonymous-default-export: [2, {"allowArrowFunction": true}] */
-export default ({ updateState, state }) => {
+export default ({ updateState, state, hideModal }) => {
     const goBack = () => {
         state.history.pop()
         const newLink = state.history[state.history.length - 1]
@@ -16,7 +16,7 @@ export default ({ updateState, state }) => {
     }
 
     return (
-        <div className="h-full w-full bg-gray-800 text-gray-500">
+        <div className="h-full w-full bg-gray-800 text-gray-500 relative" >
             <div className="flex w-full h-12 bg-gray-700 items-center justify-center relative">
                 {state.navLink !== 'General' ? (
                         <LeftArrow onClick={goBack}>
@@ -24,6 +24,9 @@ export default ({ updateState, state }) => {
                         </LeftArrow>
                     ) : null}
                 <Text>{state.navLink} Setting</Text>
+                    <RightArrow onClick={() => hideModal()} className="lg:hidden">
+                        <Close />
+                    </RightArrow>
             </div>
 
             {state.navLink === 'General' ? 
@@ -32,7 +35,7 @@ export default ({ updateState, state }) => {
             {state.navLink === 'Background' ? 
                 <BackgroundSetting updateState={updateState} state={state} /> : null}
 
-            {state.navLink === 'Counter Background' ? 
+            {state.navLink === 'Counter' ? 
                 <CounterBackgroundSetting updateState={updateState} state={state} /> : null}
 
             {state.navLink === 'Text' ?

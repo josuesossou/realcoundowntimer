@@ -35,7 +35,7 @@ export default ({ state, updateState}) => {
                 <Separator />
                 <Separator />
 
-                <HeaderText>Solid Color</HeaderText>
+                <HeaderText>Counter Background Color</HeaderText>
                 <LongBtn 
                     onClick={() => {
                         state.history.push('ColorPicker')

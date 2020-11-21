@@ -1,19 +1,21 @@
 import React, {useEffect} from 'react'
 import styled from "styled-components";
-import { useParams, Link } from 'react-router-dom'
+import { Link } from 'react-router-dom'
 import { Button } from './Shared'
 
 const PublishButton = styled(Button).attrs({
     className: 'bg-blue-600 px-5 py-2'
 })``
 
-export default ({ state }) => {
+export default ({ updateCache }) => {
     useEffect(() => {
         
     }, [])
 
     const onPublishing = () => {
-        localStorage.setItem('state', JSON.stringify(state));
+        const state = updateCache()
+        console.log(state)
+        localStorage.setItem('state', JSON.stringify({ ...state, cache: false }));
     }
 
     return (
