@@ -1,8 +1,17 @@
 import styled from "styled-components";
+import tw from "twin.macro"
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faAngleRight, faAngleLeft, faArrowLeft, faTimes } from '@fortawesome/free-solid-svg-icons'
+import { faAngleRight, faAngleLeft, faArrowLeft, faTimes, faPlus, faTh } from '@fortawesome/free-solid-svg-icons'
 
+// Logo
+export const Logo = styled.div.attrs({
+    className: "text-gray-500 cursor-default",
+})`
+    font-family: 'Racing Sans One';
+    fontSize: '1.5em'
+`
 
+// Buttons 
 export const Button = styled.button.attrs({
     className: `transition duration-500 ease-in-out 
                  h-auto w-auto text-gray-300 bg-gray-700
@@ -18,14 +27,16 @@ export const LongBtn = styled(Button).attrs({
     className: "flex justify-start hover:bg-gray-600 shadow-lg relative"
 })``
 
+// wrappers, flex column
 export const ColumnBox = styled.div.attrs({
-    className: 'flex flex-col w-full'
+    className: 'flex flex-col'
 })``
 
 export const CustomColumnBox = styled(ColumnBox).attrs({
     className: 'justify-start mb-5'
 })``
 
+// wrappers flex row
 export const RowBox = styled.div.attrs({
     className: 'flex'
 })``
@@ -46,6 +57,7 @@ export const Wrapper = styled.div.attrs({
     className:"px-2 py-6 h-full w-full"
 })``
 
+// Radio selection
 export const RadioSelection = styled.div.attrs(({selected}) => ({
     className:`p-2 w-full h-auto transition duration-500 ease-in-out
                 ${selected ? 'bg-gray-900' : 'bg-gray-700'} flex justify-start items-center
@@ -58,6 +70,8 @@ export const RadioDot = styled.div.attrs(({selected}) => ({
                              'border-2 border-gray-200 w-4 h-4 border-opacity-25'} mr-4`
 }))`
 `
+
+// Left and Right arrow wrapper and buttons
 const Arrow = styled.div.attrs({
     className: `absolute bottom-0 top-0 h-full w-2/12 z-10 flex justify-center 
                 items-center cursor-pointer text-gray-300 `
@@ -87,6 +101,10 @@ export const Separator = styled.div.attrs({
     className: 'mb-5'
 })``
 
+export const RowSeparator = styled.div.attrs({
+    className: 'ml-5'
+})``
+
 export const Hr = styled.div.attrs({
     className: 'border border-1 border-gray-700 '
 })``
@@ -99,6 +117,7 @@ export const SideBarWraper = styled.div.attrs({
     @media (min-width: 1024px) { left: 0 }
 `
 
+// Customize button on the preview page for smaller devices
 export const Customize = styled.div.attrs({
     className: 'absolute lg:hidden bg-gray-200 shadow-lg py-2 px-3' 
 })`
@@ -106,7 +125,23 @@ export const Customize = styled.div.attrs({
     top: 1em;
 `
 
+// Navbar
+export const Navbar = styled.div.attrs({
+    className: 'w-full h-auto py-3 bg-gray-800 flex justify-center items-center'
+})``
+
+export const CountdownPageWrapper = styled.div.attrs({
+    className: 'h-auto md:w-2/3 text-gray-300 w-full'
+})``
+
+export const Spinner = styled.svg.attrs({
+    className: 'animate-spin h-8 w-8 mr-3 bg-gray-800',
+    viewBox: '0 0 24 24'
+})``
+// Icons from Font Awesome
 export const AngleRightIcon = () => <FontAwesomeIcon icon={faAngleRight} />
 export const AngleLeftIcon = () => <FontAwesomeIcon icon={faAngleLeft} />
 export const ArrowLeftIcon = () => <FontAwesomeIcon icon={faArrowLeft} />
 export const Close = () => <FontAwesomeIcon icon={faTimes} />
+export const AddIcon = () => <FontAwesomeIcon icon={faPlus} />
+export const FilterIcon = () => <FontAwesomeIcon icon={faTh} color='#1a202c' />

@@ -12,7 +12,7 @@ import {
     Separator,
 } from './Shared'
 
-export default ({ state, updateState}) => {
+export default ({ state, updateState, navigation, updateHistory}) => {
     const counterBgTypes = [
         {title: 'None', type: 0},
         {title: 'Group Digits', type: 1},
@@ -38,8 +38,9 @@ export default ({ state, updateState}) => {
                 <HeaderText>Counter Background Color</HeaderText>
                 <LongBtn 
                     onClick={() => {
-                        state.history.push('ColorPicker')
-                        updateState({ ...state, navLink: 'Color', colorToUpdate: 'counterBgColor' })
+                        navigation.history.push('ColorPicker')
+                        updateHistory({ ...navigation, navLink: 'Color' })
+                        updateState({ ...state, colorToUpdate: 'counterBgColor' })
                     }}
                 >
                     <ColorPickerBg bgColor={state.counterBgColor} />

@@ -5,47 +5,67 @@ import BackgroundSetting from './BackgroundSetting'
 import CounterBackgroundSetting from './CounterBackgroundSetting'
 import TextSetting from './TextSetting'
 import ColorPicker from './ColorPicker'
-import FontSetting from './FontSetting'
+// import FontSetting from './FontSetting'
 
 /* eslint import/no-anonymous-default-export: [2, {"allowArrowFunction": true}] */
-export default ({ updateState, state, hideModal }) => {
+export default ({ updateState, state, hideModal, navigation, updateHistory }) => {
     const goBack = () => {
-        state.history.pop()
-        const newLink = state.history[state.history.length - 1]
-        updateState((prev) => ({...prev, navLink: newLink}))
+        navigation.history.pop()
+        const newLink = navigation.history[navigation.history.length - 1]
+        updateHistory((prev) => ({...prev, navLink: newLink}))
     }
 
     return (
         <div className="h-full w-full bg-gray-800 text-gray-500 relative" >
             <div className="flex w-full h-12 bg-gray-700 items-center justify-center relative">
-                {state.navLink !== 'General' ? (
+                {navigation.navLink !== 'General' ? (
                         <LeftArrow onClick={goBack}>
                             <ArrowLeftIcon />
                         </LeftArrow>
                     ) : null}
-                <Text>{state.navLink} Setting</Text>
+                <Text>{navigation.navLink} Setting</Text>
                     <RightArrow onClick={() => hideModal()} className="lg:hidden">
                         <Close />
                     </RightArrow>
             </div>
 
-            {state.navLink === 'General' ? 
-                <GeneralSetting updateState={updateState} state={state} /> : null}
+            {navigation.navLink === 'General' ? 
+                <GeneralSetting 
+                    updateState={updateState} 
+                    state={state} 
+                    updateHistory={updateHistory} 
+                    navigation={navigation} 
+                /> : null}
             
-            {state.navLink === 'Background' ? 
-                <BackgroundSetting updateState={updateState} state={state} /> : null}
+            {navigation.navLink === 'Background' ? 
+                <BackgroundSetting 
+                    updateState={updateState} 
+                    state={state} 
+                    updateHistory={updateHistory} 
+                    navigation={navigation} 
+                /> : null}
 
-            {state.navLink === 'Counter' ? 
-                <CounterBackgroundSetting updateState={updateState} state={state} /> : null}
+            {navigation.navLink === 'Counter' ? 
+                <CounterBackgroundSetting 
+                    updateState={updateState} 
+                    state={state} 
+                    updateHistory={updateHistory} 
+                    navigation={navigation} 
+                /> : null}
 
-            {state.navLink === 'Text' ?
-                <TextSetting updateState={updateState} state={state} /> : null}
+            {navigation.navLink === 'Text' ?
+                <TextSetting 
+                    updateState={updateState} 
+                    state={state} 
+                    updateHistory={updateHistory} 
+                    navigation={navigation} 
+                /> : null}
 
-            {state.navLink === 'Color' ?
+            {navigation.navLink === 'Color' ?
                 <ColorPicker updateState={updateState} state={state} /> : null}
             
-            {state.navLink === 'Font' ?
-                <FontSetting updateState={updateState} state={state} /> : null}
+            {/* {state.navLink === 'Font' ?
+                <FontSetting updateState={updateState} state={state} /> : null} */}
         </div>
     )
 }

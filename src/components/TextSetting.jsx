@@ -12,7 +12,7 @@ import {
     Separator,
 } from './Shared'
 
-export default ({ state, updateState}) => {
+export default ({ state, updateState, navigation, updateHistory }) => {
     const fontsArray = fontStr.split('\n')
 
     return (  
@@ -21,8 +21,9 @@ export default ({ state, updateState}) => {
                 <HeaderText>Text Color</HeaderText>
                 <LongBtn 
                     onClick={() => {
-                        state.history.push('ColorPicker')
-                        updateState({ ...state, navLink: 'Color', colorToUpdate: 'textColor' })
+                        navigation.history.push('ColorPicker')
+                        updateHistory({ ...navigation, navLink: 'Color' })
+                        updateState({ ...state, colorToUpdate: 'textColor' })
                     }}
                 >
                     <ColorPickerBg bgColor={state.textColor} />

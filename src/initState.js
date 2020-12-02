@@ -6,16 +6,12 @@ export default {
     showDay: true,
     showHour: true,
     showDate: true,
-    navLink: 'General', 
-    history: ['General'],
     days: 0, 
     hours: 0, 
     minutes: 5, 
     seconds: 15,
     date,
-    dateString,
     title: 'New Countdown',
-    dateOptions,
     backgroundType: 'solid', //gradien, url, later upload, and uploadVideo 
     counterBgType: 'none', //group digit each group, all
     colorToUpdate: 'bgColor',

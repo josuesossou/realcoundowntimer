@@ -15,7 +15,7 @@ const SmallText = styled.div.attrs({
     line-height: normal;
 `
 const LargeText = styled.div.attrs(({ heirachy }) => ({
-    className: `p-0 m-0 mb-3 relative text-center w-full px-2
+    className: `p-0 m-0 mb-3 relative text-center max-w-full px-2
                 text-${heirachy === 1 ? 'shadow-lg' : ''}`
 }))`
     box-sizing: content-box;
@@ -45,15 +45,17 @@ const CountDownWrapper = styled.div.attrs({
 /* eslint import/no-anonymous-default-export: [2, {"allowArrowFunction": true}] */
 export default ({ state, updateCache }) => {
     const [time, setTime] = useState({sec: 0, min: 0, hour: 0, day: 0})
+    const [ended, setEnded] = useState(false)
     let timer = useRef()
 
-    const tick = useCallback((secs, mins, hrs, days) => {
+    const tick = useCallback((secs, mins, hrs, days, freeze) => {
         let newSec = secs, newMin = mins, newHour = hrs, newDay = days
 
         setTime({sec: newSec, min: newMin, hour: newHour, day: newDay})
+        setEnded(false)
 
         if (state.cache) {
-            updateCache({sec: newSec, min: newMin, hour: newHour, day: newDay})
+            updateCache({ sec: newSec, min: newMin, hour: newHour, day: newDay })
         }
 
         newSec = secs-1
@@ -79,12 +81,14 @@ export default ({ state, updateCache }) => {
             }
         }
 
-        if (newSec > 0 || newMin > 0 || newHour > 0 || newDay > 0) {
+        if (newSec >= 0 || newMin > 0 || newHour > 0 || newDay > 0) {
+            if (freeze) return // stops the timer
             timer.current = setTimeout(() => tick(newSec, newMin, newHour, newDay), 1000)
         }
 
-        if (newSec <= 0 && newMin <= 0 && newHour <= 0 && newDay <= 0) {
+        if (newSec < 0 && newMin <= 0 && newHour <= 0 && newDay <= 0) {
             setTime({sec: 0, min: 0, hour: 0, day: 0})
+
             if (state.cache) {
                 updateCache({ sec: 0, min: 0, hour: 0, day: 0 })
             }
@@ -93,8 +97,8 @@ export default ({ state, updateCache }) => {
 
     useEffect(() => {
         clearTimeout(timer.current)
-        tick(state.seconds, state.minutes, state.hours, state.days,)
-    }, [state.seconds, state.minutes, state.hours, state.days, tick])
+        tick(state.seconds, state.minutes, state.hours, state.days, state.freeze)
+    }, [state.seconds, state.minutes, state.hours, state.days, state.freeze, tick])
 
     return (
         <div className="h-full w-full shadow-lg relative">
@@ -109,12 +113,12 @@ export default ({ state, updateCache }) => {
             
 
             <CountDownWrapper textColor={state.textColor} fontFamily={`'${state.fontFamily}'`}>
-                <div className="md:text-xl sm:text-lg text-md mb-10">
+                <div className="md:text-xl sm:text-lg text-md mb-10 px-2 text-center">
                     {state.title}
                 </div>
 
+                {ended ? (<div style={{ fontSize: '8vw'}} className="mb-20">Happy New Year</div>) : (
                 <CounterWrapper>
-                    
                     <CustomColumnBox 
                         bg={state.counterBgHeirearchy >= 2 ? state.counterBgColor : ''}
                         heirachy={state.counterBgHeirearchy}>
@@ -180,6 +184,7 @@ export default ({ state, updateCache }) => {
                         </>
                     ) : null}
                 </CounterWrapper>
+                )}
                 {state.showDate ? 
                     (<div className=" sm:text-md text-sm mt-5">{state.date}</div>) : null}
             </CountDownWrapper>

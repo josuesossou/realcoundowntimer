@@ -16,7 +16,7 @@ import {
     Hr
 } from './Shared'
 
-export default ({ state, updateState }) => {
+export default ({ state, updateState, navigation, updateHistory }) => {
     //gradient, url, later upload, and uploadVideo
     const bgTypes = [
         {title: 'Solid Color', type: 'solid'},
@@ -40,9 +40,25 @@ export default ({ state, updateState }) => {
                 <Separator />
                 <Separator />
 
-                {state.bgType === 'solid' ? <SolidColor  state={state} updateState={updateState}  /> : null}
-                {state.bgType === 'gradient' ? <Gradient state={state} updateState={updateState} /> : null}
-                {state.bgType === 'url' ? <UrlSetting state={state} updateState={updateState} /> : null}
+                {state.bgType === 'solid' ? 
+                    <SolidColor  
+                        state={state} 
+                        updateState={updateState}
+                        navigation={navigation} 
+                        updateHistory={updateHistory}
+                    /> : null}
+                {state.bgType === 'gradient' ? 
+                    <Gradient
+                        state={state} 
+                        updateState={updateState} 
+                        navigation={navigation} 
+                        updateHistory={updateHistory}
+                    /> : null}
+                {state.bgType === 'url' ? 
+                    <UrlSetting 
+                        state={state} 
+                        updateState={updateState} 
+                    /> : null}
 
             </CustomColumnBox>
         </Wrapper>
@@ -50,14 +66,15 @@ export default ({ state, updateState }) => {
 }
 
 // For solid Color Setting
-const SolidColor = ({ state, updateState }) => {
+const SolidColor = ({ state, updateState, navigation, updateHistory }) => {
     return (
         <>
             <HeaderText>Solid Color</HeaderText>
             <LongBtn 
                 onClick={() => {
-                    state.history.push('ColorPicker')
-                    updateState({ ...state, navLink: 'Color', colorToUpdate: 'bgColor' })
+                    navigation.history.push('ColorPicker')
+                    updateHistory({ ...navigation, navLink: 'Color' })
+                    updateState({ ...state, colorToUpdate: 'bgColor' })
                 }}
             >
                 <ColorPickerBg bgColor={state.bgColor} />
@@ -70,14 +87,15 @@ const SolidColor = ({ state, updateState }) => {
 }
 
 // For Gradient Color Setting
-const Gradient = ({ state, updateState }) => {
+const Gradient = ({ state, updateState, navigation, updateHistory }) => {
     return (
         <>
             <HeaderText>Gradient First Color</HeaderText>
             <LongBtn 
                 onClick={() => {
-                    state.history.push('ColorPicker')
-                    updateState({ ...state, navLink: 'Color', colorToUpdate: 'gradientFirstColor' })
+                    navigation.history.push('ColorPicker')
+                    updateHistory({ ...navigation, navLink: 'Color' })
+                    updateState({ ...state, colorToUpdate: 'gradientFirstColor' })
                 }}
             >
                 <ColorPickerBg bgColor={state.gradientFirstColor} />
@@ -91,8 +109,9 @@ const Gradient = ({ state, updateState }) => {
             <HeaderText>Gradient Second Color</HeaderText>
             <LongBtn 
                 onClick={() => {
-                    state.history.push('ColorPicker')
-                    updateState({ ...state, navLink: 'Color', colorToUpdate: 'gradientSecondColor' })
+                    navigation.history.push('ColorPicker')
+                    updateHistory({ ...navigation, navLink: 'Color' })
+                    updateState({ ...state, colorToUpdate: 'gradientSecondColor' })
                 }}
             >
                 <ColorPickerBg bgColor={state.gradientSecondColor} />
@@ -128,12 +147,7 @@ const UrlSetting = ({ state, updateState }) => {
                 onChange={(e) => {
                     updateState({ ...state, urlBg: e.target.value })
                 }}
-            >
-                {/* <ColorPickerBg bgColor={state.bgColor} />
-                <RightArrow >
-                    <AngleRightIcon />
-                </RightArrow> */}
-            </InputBox>
+            />
 
             <Separator />
 

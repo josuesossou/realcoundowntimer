@@ -8,22 +8,21 @@ const LongBtnPad = styled(LongBtn).attrs({
     className: 'p-2'
 })``
 
-export default ({ state, updateState }) => {
+export default ({ state, updateState, navigation, updateHistory }) => {
     const { 
         title, 
         days, 
         hours, 
         seconds, 
         minutes,
-        dateString,
-        dateOptions
     } = state
+
+    const dateString = Date.now()
+    const dateOptions = { year: 'numeric', month: 'long', day: 'numeric' }
 
     const reg = /[^0-9AMP]+/
     const d = new Date(dateString).toLocaleString().split(reg)
-
-    const today = `${d[2]}-${d[0]}-${d[1]}T${d[3]<10? '0'+d[3]:d[3]}:${d[4]}`
-    // console.log(d, today)
+    const today = `${d[2]}-${d[0]}-${d[1]<10? '0'+d[1]:d[1]}T${d[3]<10? '0'+d[3]:d[3]}:${d[4]<10? '0'+d[4]:d[4]}`
 
     return (
         <Wrapper>
@@ -33,7 +32,14 @@ export default ({ state, updateState }) => {
                     className="py-2"
                     type='text'
                     defaultValue={title}
-                    onChange={(e) => updateState({...state, title: e.target.value})}
+                    maxLength={35}
+                    pattern='\[a-zA-Z0-9]+\'
+                    onChange={(e) => {
+                        e.preventDefault()
+                        if (e.target.value.match('^[a-zA-Z0-9 ]+$')) {
+                            updateState({...state, title: e.target.value})
+                        }
+                    }}
                 />
             </CustomColumnBox>
 
@@ -93,10 +99,9 @@ export default ({ state, updateState }) => {
                     onChange={(e) => {
                         const arr = e.target.value.split(reg)
                         const date = new Date(arr[0], arr[1]-1, arr[2]).toLocaleDateString('en-US', dateOptions)
-                        const days = moment(e.target.value).diff(moment(today), 'days');
+                        const days = moment(e.target.value).diff(moment(today), 'days').toString();
                         const h =  Number(arr[3])-d[3]
                         const m =  Number(arr[4])-d[4]
-                        console.log(arr)
                         updateState({ ...state, date, days, hours: h<0? 24+h:h, minutes: m<0? 60+m:m })
                     }}
                 />
@@ -125,17 +130,37 @@ export default ({ state, updateState }) => {
                 </RowBox>
             </CustomColumnBox>
 
-            {/* <CustomColumnBox>
-                <HeaderText>Display</HeaderText>  (Text to show when time reached) 
-            </CustomColumnBox> */}
-
-            <CustomColumnBox />
+            <CustomColumnBox>
+                <SmallBtn
+                    selected={!state.freeze}
+                    className="w-1/3 px-3"
+                    onClick={() => {
+                        updateState((prev) => ({ ...state, freeze: !prev.freeze  }))
+                    }}
+                >
+                    {state.freeze ? 'Start' : 'Freeze'}
+                </SmallBtn>
+            </CustomColumnBox>
 
             <CustomColumnBox>
                 <LongBtnPad 
                     onClick={() => {
-                        state.history.push('Background')
-                        updateState({...state, navLink: 'Background'})
+                        navigation.history.push('Display')
+                        updateHistory({ ...navigation, navLink: 'Display'})
+                    }}
+                >
+                    Ended Display
+                    <RightArrow>
+                        <AngleRightIcon />
+                    </RightArrow>
+                </LongBtnPad>
+            </CustomColumnBox>
+
+            <CustomColumnBox>
+                <LongBtnPad 
+                    onClick={() => {
+                        navigation.history.push('Background')
+                        updateHistory({ ...navigation, navLink: 'Background'})
                     }}
                 >
                     Background
@@ -148,8 +173,8 @@ export default ({ state, updateState }) => {
             <CustomColumnBox>
                 <LongBtnPad 
                     onClick={() => {
-                        state.history.push('Counter')
-                        updateState({...state, navLink: 'Counter'})
+                        navigation.history.push('Counter')
+                        updateHistory({ ...navigation, navLink: 'Counter'})
                     }}
                 >
                     Counter Background
@@ -162,8 +187,8 @@ export default ({ state, updateState }) => {
             <CustomColumnBox>
                 <LongBtnPad
                     onClick={() => {
-                        state.history.push('Text')
-                        updateState({...state, navLink: 'Text'})
+                        navigation.history.push('Text')
+                        updateHistory({ ...navigation, navLink: 'Text'})
                     }}
                 >
                     Text
