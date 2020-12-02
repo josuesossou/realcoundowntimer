@@ -11,7 +11,6 @@ export default () => {
     const { countdownId } = useParams()
 
     useEffect(() => {
-        // const savedState = JSON.parse(localStorage.getItem('state'));
         firebase.getCountdownPageData(countdownId).then((data) => {
             if (data) {
                 console.log(data)
@@ -24,16 +23,6 @@ export default () => {
                 setState(data)
             }
         })
-        // if (savedState) {
-        //     WebFont.load({
-        //         google: {
-        //             families: [savedState.fontFamily]
-        //         }
-        //     })
-
-        //     setState(savedState)
-        // }
-
     }, [])
     
     return (

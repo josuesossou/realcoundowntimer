@@ -4,14 +4,6 @@ import 'firebase/firestore'
 
  
 const config = {
-	// apiKey: "AIzaSyBroYRGrpaDwv40F6VDcbO6Qny_r5B-SH4",
-	// authDomain: "cdtimer-ed6ac.firebaseapp.com",
-	// databaseURL: "https://cdtimer-ed6ac.firebaseio.com",
-	// projectId: "cdtimer-ed6ac",
-	// storageBucket: "cdtimer-ed6ac.appspot.com",
-	// messagingSenderId: "833370404085",
-	// appId: "1:833370404085:web:560b171419e1c623e5c1bc",
-	// measurementId: "G-E4PMGKNQPP"
 	apiKey: process.env.REACT_APP_API_KEY,
 	authDomain: process.env.REACT_APP_AUTH_DOMAIN,
 	databaseURL: process.env.REACT_APP_DATABASE_URL,
