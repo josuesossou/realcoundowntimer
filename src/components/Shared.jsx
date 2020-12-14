@@ -1,7 +1,7 @@
 import styled from "styled-components";
 import tw from "twin.macro"
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faAngleRight, faAngleLeft, faArrowLeft, faTimes, faPlus, faTh } from '@fortawesome/free-solid-svg-icons'
+import { faAngleRight, faAngleLeft, faArrowLeft, faTimes, faPlus, faTh, faShare } from '@fortawesome/free-solid-svg-icons'
 
 // Logo
 export const Logo = styled.div.attrs({
@@ -20,7 +20,7 @@ export const Button = styled.button.attrs({
     outline: 0 !important   
 `
 export const SmallBtn = styled(Button).attrs(({selected}) => ({
-    className: `p-2 bg-gray-700 relative ${selected ? 'shadow-lg' : ' bg-gray-900'}`
+    className: `p-2 relative ${selected ? 'shadow-lg' : ' bg-gray-900'}`
 }))``
 
 export const LongBtn = styled(Button).attrs({
@@ -127,17 +127,15 @@ export const Customize = styled.div.attrs({
 
 // Navbar
 export const Navbar = styled.div.attrs({
-    className: 'w-full h-auto py-3 bg-gray-800 flex justify-center items-center'
+    className: 'w-full h-auto py-3 bg-gray-800 flex justify-center items-center relative'
 })``
 
-export const CountdownPageWrapper = styled.div.attrs({
-    className: 'h-auto md:w-2/3 text-gray-300 w-full'
-})``
 
 export const Spinner = styled.svg.attrs({
     className: 'animate-spin h-8 w-8 mr-3 bg-gray-800',
     viewBox: '0 0 24 24'
 })``
+
 // Icons from Font Awesome
 export const AngleRightIcon = () => <FontAwesomeIcon icon={faAngleRight} />
 export const AngleLeftIcon = () => <FontAwesomeIcon icon={faAngleLeft} />
@@ -145,3 +143,4 @@ export const ArrowLeftIcon = () => <FontAwesomeIcon icon={faArrowLeft} />
 export const Close = () => <FontAwesomeIcon icon={faTimes} />
 export const AddIcon = () => <FontAwesomeIcon icon={faPlus} />
 export const FilterIcon = () => <FontAwesomeIcon icon={faTh} color='#1a202c' />
+export const ShareIcon = () => <FontAwesomeIcon icon={faShare} color='#1a202c' />

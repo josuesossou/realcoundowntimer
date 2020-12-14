@@ -1,9 +1,12 @@
 import React, { useState, useEffect, useContext } from 'react'
+import moment from 'moment'
+import convert from '../constants/convertSecToTime'
 import { useParams } from "react-router-dom"
 import { FirebaseContext } from '../backend'
 import { Main, SidePanel, BottomPanel, Loader } from '../components'
 import { SideBarWraper, Customize } from '../components/Shared'
 import InitState from '../initState'
+import WebFont from 'webfontloader'
 import "../css/custom.css"
 
 
@@ -16,10 +19,42 @@ export default () => {
 
     const { countdownId } = useParams()
     const firebase = useContext(FirebaseContext)
+    // const { useTime, useDate } = state
     
     useEffect(() => {
         if (countdownId !== 'default') {
-            firebase.getCountdownPageData(countdownId).then((data) => console.log(data))
+            firebase.getCountdownPageData(countdownId).then((data) =>{
+                WebFont.load({
+                    google: {
+                        families: [data.fontFamily]
+                    }
+                })
+
+                if (data.useDate) {
+                    const value = data.useDateString
+
+                    // today date format
+                    const now = new Date(Date.now())
+                    const seconds = moment(value).diff(moment(now), 'seconds', true).toString()
+
+                    const {d, h, m, s} = convert(seconds)
+                    if (d < 0) {
+                        data = { ...data,  days: 0, hours: 0,
+                            minutes: 0, seconds: 0}
+                    } else {
+                        data = { ...data, days: d, hours: h,
+                            minutes: m, seconds: s }
+                    }
+                }
+
+                if (data.useTime) {
+                    const dateOptions = { year: 'numeric', month: 'long', day: 'numeric' }
+                    const date =  new Date(Date.now()).toLocaleString('en-US', dateOptions)
+                    data = { ...data, date }
+                }
+
+                setState(data)
+            })
         } else {
             setState(InitState)
         }
@@ -27,7 +62,7 @@ export default () => {
 
     const updateStateWithCache = () => {
         const {day, hour, min, sec } = cache
-        return { ...state, days:day, hours: hour, minutes: min, seconds: sec };
+        return { ...state, days: day, hours: hour, minutes: min, seconds: sec };
     }
 
     if (state)  
@@ -44,7 +79,7 @@ export default () => {
                 </SideBarWraper>
                 <div className="flex flex-col lg:w-4/5 w-full h-full relative z-0 overflow-hidden">
                     <div className="flex-1 bg-gray-100">
-                        <Main state={state} updateCache={updateCache} /> 
+                        <Main state={{ ...state, cache: true }} updateCache={updateCache} /> 
                     </div>
                     <BottomPanel updateState={setState} updateCache={updateStateWithCache} />
                 </div>
@@ -56,6 +91,8 @@ export default () => {
         ) 
 
     return (
-        <Loader />
+        <div className="flex h-screen w-screen overflow-hidden relative">
+            <Loader />
+        </div>
     )                      
 }

@@ -2,7 +2,7 @@ import React from 'react'
 import { Spinner } from './Shared'
 
 export default () => (
-    <div className='flex justify-center items-center w-screen h-screen bg-gray-200'>
+    <div className='flex justify-center items-center w-full h-full'>
         <Spinner />
     </div>
 )

@@ -1,8 +1,9 @@
 import React from 'react'
 import styled from "styled-components"
 import moment from 'moment'
-import { SmallBtn, LongBtn, CustomColumnBox, RowBox,
-    InputBox, HeaderText, Wrapper, AngleRightIcon, RightArrow } from './Shared'
+import convert from '../constants/convertSecToTime'
+import { SmallBtn, LongBtn, CustomColumnBox, RowBox, RadioDot, RadioSelection,
+    InputBox, HeaderText, Wrapper, AngleRightIcon, RightArrow, Separator } from './Shared'
 
 const LongBtnPad = styled(LongBtn).attrs({
     className: 'p-2'
@@ -21,8 +22,10 @@ export default ({ state, updateState, navigation, updateHistory }) => {
     const dateOptions = { year: 'numeric', month: 'long', day: 'numeric' }
 
     const reg = /[^0-9AMP]+/
-    const d = new Date(dateString).toLocaleString().split(reg)
-    const today = `${d[2]}-${d[0]}-${d[1]<10? '0'+d[1]:d[1]}T${d[3]<10? '0'+d[3]:d[3]}:${d[4]<10? '0'+d[4]:d[4]}`
+    const newDate = new Date(dateString)
+    const d = newDate.toLocaleString().split(reg)
+    const today = `${d[2]}-${d[0]}-${d[1]<10? '0'+d[1]:d[1]}T${d[3]<10?
+                     '0'+d[3]:d[3]}:${d[4]<10? '0'+d[4]:d[4]}`
 
     return (
         <Wrapper>
@@ -31,9 +34,9 @@ export default ({ state, updateState, navigation, updateHistory }) => {
                 <InputBox 
                     className="py-2"
                     type='text'
-                    defaultValue={title}
+                    value={title}
                     maxLength={35}
-                    pattern='\[a-zA-Z0-9]+\'
+                    pattern='/[a-zA-Z0-9]+/'
                     onChange={(e) => {
                         e.preventDefault()
                         if (e.target.value.match('^[a-zA-Z0-9 ]+$')) {
@@ -42,71 +45,107 @@ export default ({ state, updateState, navigation, updateHistory }) => {
                     }}
                 />
             </CustomColumnBox>
-
+            
             <CustomColumnBox>
-                <HeaderText>Time</HeaderText>
-                <RowBox>
+            <RadioSelection 
+                selected={state.useDate} 
+                onClick={() => updateState({ ...state, useTime: false, useDate: true,
+                            date: newDate.toLocaleString('en-US', dateOptions) })}>
+                <RadioDot selected={state.useDate} />
+                By Date
+            </RadioSelection>
+            <RadioSelection 
+                selected={state.useTime} 
+                onClick={() => updateState({ ...state, useTime: true, useDate: false, 
+                            date: newDate.toLocaleString('en-US', dateOptions) })}>
+                <RadioDot selected={state.useTime} />
+                By Time
+            </RadioSelection>
+            </CustomColumnBox>
+
+            <Separator />
+
+            {state.useTime ? (
+                <CustomColumnBox>
+                    <RowBox>
+                        <InputBox 
+                            type="number" 
+                            className="w-1/4 mr-3" 
+                            min={0} max={99}
+                            maxLength={2}
+                            defaultValue={0}
+                            value={days}
+                            onChange={(e) => {
+                                const value = e.target.value
+                                if (value <= 99)
+                                    updateState({ ...state, days: value })
+                            }}
+                        /> 
+                        <InputBox
+                            type="number" 
+                            className="w-1/4 mr-3" 
+                            min={0} max={23}
+                            maxLength={2}
+                            value={hours}
+                            defaultValue={0}
+                            onChange={(e) => {
+                                const value = e.target.value
+                                if (value <= 23)
+                                    updateState({ ...state, hours: value })
+                            }}
+                        /> 
+                        <InputBox 
+                            type="number" 
+                            className="w-1/4 mr-3" 
+                            min={0} max={59}
+                            value={minutes}
+                            defaultValue={0}
+                            onChange={(e) => {
+                                const value = e.target.value
+                                if (value <= 59)
+                                    updateState({ ...state, minutes: value })
+                            }}
+                        />
+                        <InputBox 
+                            type="number" 
+                            className="w-1/4" 
+                            min={0} max={59}
+                            value={seconds}
+                            defaultValue={0}
+                            onChange={(e) => {
+                                const value = e.target.value
+                                if (value <= 59)
+                                    updateState({ ...state, seconds: value })
+                            }}
+                        />
+                    </RowBox>
+                </CustomColumnBox>
+            ) : null}
+
+            {state.useDate ? (
+                <CustomColumnBox>
                     <InputBox 
-                        type="number" 
-                        className="w-1/4 mr-3" 
-                        min={0} max={99} 
-                        // defaultValue={days}
+                        type="datetime-local"
+                        min={today}
+                        defaultValue={today}
+                        className="py-2"
                         onKeyDown={e => e.preventDefault()}
-                        value={days}
                         onChange={(e) => {
-                            e.preventDefault()
-                            updateState({...state, days: e.target.value})
+                            const value = e.target.value
+                            const now =  new Date(Date.now())
+                            const date = new Date(value).toLocaleDateString('en-US', dateOptions)
+
+                            const seconds = moment(value).diff(moment(now), 'seconds', true).toString()
+                            const {d, h, m, s} = convert(seconds)
+                   
+                            updateState({ ...state, date, days: d, hours: h,
+                                         minutes: m, seconds: s, useDateString: value})
                         }}
-                    /> 
-                    <InputBox
-                        type="number" 
-                        className="w-1/4 mr-3" 
-                        min={0} max={23} 
-                        onKeyDown={e => e.preventDefault()}
-                        // defaultValue={hours}
-                        value={hours}
-                        onChange={(e) => {updateState({...state, hours: e.target.value})}}
-                    /> 
-                    <InputBox 
-                        type="number" 
-                        className="w-1/4 mr-3" 
-                        min={0} max={59} 
-                        onKeyDown={e => e.preventDefault()}
-                        // defaultValue={minutes}
-                        value={minutes}
-                        onChange={(e) => updateState({...state, minutes: e.target.value})}
                     />
-                    <InputBox 
-                        type="number" 
-                        className="w-1/4" 
-                        min={0} max={59} 
-                        onKeyDown={e => e.preventDefault()}
-                        // defaultValue={seconds}
-                        value={seconds}
-                        onChange={(e) => updateState({...state, seconds: e.target.value})}
-                    />
-                </RowBox>
-            </CustomColumnBox>
+                </CustomColumnBox>
+            ) : null}
 
-            <CustomColumnBox>
-                <HeaderText>Date</HeaderText>
-                <InputBox 
-                    type="datetime-local"
-                    min={today}
-                    defaultValue={today}
-                    className="py-2"
-                    onKeyDown={e => e.preventDefault()}
-                    onChange={(e) => {
-                        const arr = e.target.value.split(reg)
-                        const date = new Date(arr[0], arr[1]-1, arr[2]).toLocaleDateString('en-US', dateOptions)
-                        const days = moment(e.target.value).diff(moment(today), 'days').toString();
-                        const h =  Number(arr[3])-d[3]
-                        const m =  Number(arr[4])-d[4]
-                        updateState({ ...state, date, days, hours: h<0? 24+h:h, minutes: m<0? 60+m:m })
-                    }}
-                />
-            </CustomColumnBox>
-
+            <Separator />
             <CustomColumnBox>
                 <HeaderText>Hide</HeaderText>
                 <RowBox>
@@ -145,11 +184,11 @@ export default ({ state, updateState, navigation, updateHistory }) => {
             <CustomColumnBox>
                 <LongBtnPad 
                     onClick={() => {
-                        navigation.history.push('Display')
-                        updateHistory({ ...navigation, navLink: 'Display'})
+                        navigation.history.push('End Phrase')
+                        updateHistory({ ...navigation, navLink: 'End Phrase'})
                     }}
                 >
-                    Ended Display
+                    Show End Phrase
                     <RightArrow>
                         <AngleRightIcon />
                     </RightArrow>

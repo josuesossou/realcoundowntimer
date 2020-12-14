@@ -5,7 +5,8 @@ import BackgroundSetting from './BackgroundSetting'
 import CounterBackgroundSetting from './CounterBackgroundSetting'
 import TextSetting from './TextSetting'
 import ColorPicker from './ColorPicker'
-// import FontSetting from './FontSetting'
+import EndPhraseSetting from './EndPhraseSetting'
+import '../css/hidden-scrollbar.css'
 
 /* eslint import/no-anonymous-default-export: [2, {"allowArrowFunction": true}] */
 export default ({ updateState, state, hideModal, navigation, updateHistory }) => {
@@ -16,7 +17,7 @@ export default ({ updateState, state, hideModal, navigation, updateHistory }) =>
     }
 
     return (
-        <div className="h-full w-full bg-gray-800 text-gray-500 relative" >
+        <div className="h-full w-full bg-gray-800 text-gray-500 relative overflow-y-scroll" id='side-panel' >
             <div className="flex w-full h-12 bg-gray-700 items-center justify-center relative">
                 {navigation.navLink !== 'General' ? (
                         <LeftArrow onClick={goBack}>
@@ -64,8 +65,8 @@ export default ({ updateState, state, hideModal, navigation, updateHistory }) =>
             {navigation.navLink === 'Color' ?
                 <ColorPicker updateState={updateState} state={state} /> : null}
             
-            {/* {state.navLink === 'Font' ?
-                <FontSetting updateState={updateState} state={state} /> : null} */}
+            {navigation.navLink === 'End Phrase' ?
+                <EndPhraseSetting updateState={updateState} state={state} /> : null}
         </div>
     )
 }

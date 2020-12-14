@@ -20,7 +20,10 @@ class Firebase {
 
 		this.auth = app.auth();
 		this.db = app.firestore();
+		this.user = null
 	}
+	
+	getUser = this.user
 
 	// *** Auth API ***
 	doCreateUserWithEmailAndPassword = (email, password) =>
@@ -52,7 +55,15 @@ class Firebase {
 			const data = await this.db.collection("countdownpagedata").get()
 			return data.docs
 		} catch (err) {
-			console.log(err)
+			return null
+		}
+	}
+
+	getUserCountdownPagesData = async () => {
+		try {
+			const data = await this.db.collection("countdownpagedata").get()
+			return data.docs
+		} catch (err) {
 			return null
 		}
 	}
@@ -65,7 +76,6 @@ class Firebase {
 			console.log(error)
 			return false
 		}
-		
 	}
 }
  

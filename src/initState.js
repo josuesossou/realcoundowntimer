@@ -23,8 +23,13 @@ export default {
     urlBg: '',
     urlBgSize: 'cover',
     counterBgColor: '#888888',
-    counterBgHeirearchy: 0,
+    counterBgHeirearchy: 0, // based on whether having full background color under the time numbers on main
     textColor: '#000',
     fontFamily: 'Droid Sans',
-    cache: true
+    cache: true,
+    useTime: false,
+    useDate: true,
+    endPhrase: '',
+    displayEndPhrase: false,
+    useDateString: ''
 }
