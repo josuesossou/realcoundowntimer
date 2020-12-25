@@ -54,8 +54,11 @@ export default () => {
         const user = firebase.getUser
         let dataFromFirebase = []
         setLoader(true)
+        if (myPages.length > 0) {
+            return setLoader(false)
+        }
 
-        if (user && myPages.length === 0) {
+        if (user) {
             try {
                 dataFromFirebase = await firebase.getUserCountdownPagesData()
 
@@ -114,13 +117,14 @@ export default () => {
                                 <p>Pick one of the styles below and start customizing!</p>
                                 <p>Countdowns you share will also appear here!</p>
                             </div>
-                            :
+                        : null}
+                        {selected === 'mypages' && myPages.length === 0 ?
                             <div className='text-gray-700 ml-3 mb-3 text-center w-full'>
                                 <p>
-                                    {myPages.length === 0 ? 'No countdown page found' : ''}
+                                    No countdown page found
                                 </p>
                             </div>
-                        }
+                        : null}
                         {selected === 'collection' ? collectionPages.map((page, index) => {
                             const data = page.data ? page.data() : page
                             return <CoundownPage 
