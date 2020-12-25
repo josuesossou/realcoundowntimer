@@ -110,7 +110,12 @@ export default () => {
                                 <p>Countdowns you share will also appear here!</p>
                             </div>
                             :
-                            <p className='mb-3'></p>}
+                            <div className='text-gray-700 ml-3 mb-3 text-center w-full'>
+                                <p>
+                                    {myPages.length === 0 ? 'No countdown page found' : ''}
+                                </p>
+                            </div>
+                        }
                         {selected === 'collection' ? collectionPages.map((page, index) => {
                             const data = page.data ? page.data() : page
                             return <CoundownPage 
