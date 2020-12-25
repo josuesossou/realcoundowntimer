@@ -1,7 +1,8 @@
 import styled from "styled-components";
 import tw from "twin.macro"
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faAngleRight, faAngleLeft, faArrowLeft, faTimes, faPlus, faTh, faShare } from '@fortawesome/free-solid-svg-icons'
+import { faAngleRight, faAngleLeft, faArrowLeft, faTimes,
+     faPlus, faTh, faShareAlt, faHeart } from '@fortawesome/free-solid-svg-icons'
 
 // Logo
 export const Logo = styled.div.attrs({
@@ -17,7 +18,7 @@ export const Button = styled.button.attrs({
                  h-auto w-auto text-gray-300 bg-gray-700
                 `
 })`
-    outline: 0 !important   
+    outline: 0 !important;
 `
 export const SmallBtn = styled(Button).attrs(({selected}) => ({
     className: `p-2 relative ${selected ? 'shadow-lg' : ' bg-gray-900'}`
@@ -46,6 +47,23 @@ export const InputBox = styled.input.attrs({
 })`
     outline: 0 !important   
 `
+
+const Input = styled.input.attrs({
+    className: `bg-gray-400 text-gray-900 
+        focus:bg-gray-200 py-2 w-full pl-2`
+})`
+    outline: 0 !important  
+`
+
+export const FormInput = ({ type, onChange, value}) => (
+    <Input 
+        type={type}
+        value={value}
+        maxLength={35}
+        onChange={onChange}
+    />
+)
+
 export const Text = styled.p.attrs({
     className: "font-semibold"
 })``
@@ -125,12 +143,6 @@ export const Customize = styled.div.attrs({
     top: 1em;
 `
 
-// Navbar
-export const Navbar = styled.div.attrs({
-    className: 'w-full h-auto py-3 bg-gray-800 flex justify-center items-center relative'
-})``
-
-
 export const Spinner = styled.svg.attrs({
     className: 'animate-spin h-8 w-8 mr-3 bg-gray-800',
     viewBox: '0 0 24 24'
@@ -143,4 +155,5 @@ export const ArrowLeftIcon = () => <FontAwesomeIcon icon={faArrowLeft} />
 export const Close = () => <FontAwesomeIcon icon={faTimes} />
 export const AddIcon = () => <FontAwesomeIcon icon={faPlus} />
 export const FilterIcon = () => <FontAwesomeIcon icon={faTh} color='#1a202c' />
-export const ShareIcon = () => <FontAwesomeIcon icon={faShare} color='#1a202c' />
+export const ShareIcon = () => <FontAwesomeIcon icon={faShareAlt} color='#e2e8f0' />
+export const LikeIcon = ({color}) => <FontAwesomeIcon icon={faHeart} color={color} />

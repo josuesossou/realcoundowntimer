@@ -24,10 +24,9 @@ export default ({ state, updateState }) => {
                     type='text'
                     value={state.endPhrase}
                     maxLength={35}
-                    pattern='/[a-zA-Z0-9]+/'
                     onChange={(e) => {
                         e.preventDefault()
-                        if (e.target.value.match('^[a-zA-Z0-9 ]+$')) {
+                        if (e.target.value.match(/^[a-zA-Z0-9!@#$%^&*()_, \-]*$/)) {
                             updateState({...state, endPhrase: e.target.value})
                         }
                     }}

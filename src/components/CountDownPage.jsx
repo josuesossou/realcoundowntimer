@@ -4,11 +4,12 @@ import { Link } from 'react-router-dom'
 import WebFont from 'webfontloader'
 import moment from 'moment'
 import convert from '../constants/convertSecToTime'
-import { COUNTDOWN_PREVIEW } from '../constants/routes'
-import { SmallBtn, BgContent, ColumnBox } from './Shared'
+import short from 'short-uuid'
+import { COUNTDOWN_PREVIEW, COUNTDOWN_PAGE } from '../constants/routes'
+import { SmallBtn, BgContent, ColumnBox, Text, LikeIcon } from './Shared'
 
 const PageContainer = styled.div.attrs({
-    className: `lg:w-2/6 sm:w-3/6 w-full h-auto relative
+    className: `lg:w-2/6 sm:w-3/6 w-full relative
     mb-20 px-3`
 })``
 
@@ -17,7 +18,7 @@ const ContentWrapper = styled.div.attrs({
 })``
 
 const BottomBar = styled.div.attrs({
-    className: 'w-full h-auto relative'
+    className: 'w-full h-auto relative flex justify-between items-center pr-3'
 })``
 
 const SmallpagerStyle = styled.div.attrs({
@@ -67,10 +68,10 @@ const CounterWrapper = styled.div.attrs({
     box-sizing: border-box;
 `
 
-
-
-export default ({ pageData }) => {
+export default ({ pageData, typeData }) => {
     const [page, setPage] = useState(pageData)
+    const translator = short()
+    const [countdownId, setId] = useState('')
 
     React.useEffect(() => {
         WebFont.load({
@@ -78,6 +79,13 @@ export default ({ pageData }) => {
                 families: [pageData.fontFamily]
             }
         })
+        
+        if (pageData.id.split('_')[0] === 'local') {
+            setId(pageData.id)
+        } else {
+            setId(translator.fromUUID(pageData.id))
+        }
+        
 
         if (pageData.useDate) {
             const value = pageData.useDateString
@@ -118,7 +126,12 @@ export default ({ pageData }) => {
                         <BgContent bg={`${page.bgColor} url("${page.urlBg}") center/${page.urlBgSize} no-repeat`} /> : null}
 
                     <CountDownWrapper textColor={page.textColor} fontFamily={`'${page.fontFamily}'`}>
-                        <p className='mb-2'>{page.title}</p>
+                        {!page.title || page.title === '' ? (
+                            <p className='mb-2 opacity-0'>A</p>
+                        ) : (
+                            <p className='mb-2'>{page.title}</p>
+                        )}
+                        
                         
                         <CounterWrapper>
                             <CustomColumnBox 
@@ -187,16 +200,31 @@ export default ({ pageData }) => {
                             ) : null}
                         </CounterWrapper>
                         {page.showDate ? 
-                            (<div style={{ fontSize: '0.6em' }}>{page.date}</div>) : null}
+                            (<div style={{ fontSize: '0.6em' }}>{page.date}</div>) : 
+                            (<p style={{ opacity: 0, fontSize: '0.6em', cursor: 'default' }}>{'b '}</p>)}
 
                     </CountDownWrapper>
                 </SmallpagerStyle>
                 <BottomBar>
-                    <Link to={`/${page.id}/${COUNTDOWN_PREVIEW}`}>
-                        <SmallBtn>
-                            Customize
-                        </SmallBtn>
-                    </Link>
+                    {typeData === 'mypages' ?
+                        (<Link to={`/${COUNTDOWN_PREVIEW}/edit-page/${countdownId}`}>
+                            <SmallBtn>
+                                Edit
+                            </SmallBtn>
+                        </Link>)
+                        :
+                        (<Link to={`/${COUNTDOWN_PREVIEW}/new-page/${countdownId}`}>
+                            <SmallBtn>
+                                <Text>Customize</Text>
+                            </SmallBtn>
+                        </Link>)
+                    }
+                    {page.isPublic || typeData === 'mypages'? 
+                    (
+                        <Text className='text-gray-800'>
+                            <Link to={`/${COUNTDOWN_PAGE}/${countdownId}`} target='_blank'>Preview</Link>
+                        </Text>
+                    ) : null}
                 </BottomBar>
             </ContentWrapper>
         </PageContainer>

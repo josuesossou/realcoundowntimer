@@ -20,19 +20,29 @@ class Firebase {
 
 		this.auth = app.auth();
 		this.db = app.firestore();
-		this.user = null
 	}
 	
-	getUser = this.user
+	get getUser() {
+		const user = localStorage.getItem('user')
+		return JSON.parse(user)
+	}
+
+	setUser = () => {
+		const user = JSON.stringify(this.auth.currentUser)
+		localStorage.setItem('user', user)
+	}
 
 	// *** Auth API ***
 	doCreateUserWithEmailAndPassword = (email, password) =>
 	this.auth.createUserWithEmailAndPassword(email, password);
-	
+
 	doSignInWithEmailAndPassword = (email, password) =>
 		this.auth.signInWithEmailAndPassword(email, password);
 	
-	doSignOut = () => this.auth.signOut();
+	doSignOut = () => {
+		localStorage.setItem('user', null)
+		return this.auth.signOut();
+	}
 	
 	doPasswordReset = email => this.auth.sendPasswordResetEmail(email);
 	
@@ -40,19 +50,20 @@ class Firebase {
 		this.auth.currentUser.updatePassword(password);
 
 	// **** Firestore API ***
-	getCountdownPageData = async (uuid) => {
+	getCountdownPageData = async (countDownId) => {
 		try {
-			const doc = await this.db.collection("countdownpagedata").doc(uuid).get()
-			return doc.data()
+			const doc = await this.db.collection("countdownpagedata").doc(countDownId).get()
+
+			return doc.data() ? doc.data() : null
 		} catch (err) {
-			console.log(err)
 			return null
 		}
 	}
 
 	getCountdownPagesData = async () => {
 		try {
-			const data = await this.db.collection("countdownpagedata").get()
+			const data = await this.db.collection("countdownpagedata")
+							.where('isShared', '==', true).get()
 			return data.docs
 		} catch (err) {
 			return null
@@ -60,20 +71,22 @@ class Firebase {
 	}
 
 	getUserCountdownPagesData = async () => {
+		const userId = this.getUser.uid
 		try {
-			const data = await this.db.collection("countdownpagedata").get()
+			const data = await this.db.collection("countdownpagedata")
+						.where('user', '==', userId)
+						.get()
 			return data.docs
 		} catch (err) {
 			return null
 		}
 	}
 	
-	setCountdownPageData = async (uuid, data) => {
+	setCountdownPageData = async (countDownId, data) => {
 		try {
-			await this.db.collection("countdownpagedata").doc(uuid).set(data)
+			await this.db.collection("countdownpagedata").doc(countDownId).set(data)
 			return  true
 		} catch (error) {
-			console.log(error)
 			return false
 		}
 	}

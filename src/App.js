@@ -8,6 +8,8 @@ import WebFont from 'webfontloader'
 import Home from './pages/Home'
 import Preview from './pages/Preview'
 import CountDownPage from './pages/CountDown'
+import AuthPage from './pages/AuthPage'
+
 import * as ROUTES from './constants/routes'
 
 function App() {
@@ -25,11 +27,14 @@ function App() {
         <Route exact path={ROUTES.HOME}>
           <Home />
         </Route>
-        <Route  path={`/:countdownId/${ROUTES.COUNTDOWN_PREVIEW}`}>
+        <Route  path={`/${ROUTES.COUNTDOWN_PREVIEW}/:page/:countdownId`}>
           <Preview />
         </Route>
-        <Route path={`/:countdownId/${ROUTES.COUNTDOWN_PAGE}`}>
+        <Route path={`/${ROUTES.COUNTDOWN_PAGE}/:countdownId`}>
           <CountDownPage />
+        </Route>
+        <Route path={`/auth/:type`}>
+          <AuthPage />
         </Route>
       </Switch>
     </Router>

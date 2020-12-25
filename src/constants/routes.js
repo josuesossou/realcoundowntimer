@@ -1,3 +1,5 @@
 export const HOME = '/'
-export const COUNTDOWN_PREVIEW = 'countdown-preview'
+export const COUNTDOWN_PREVIEW = 'countdown'
 export const COUNTDOWN_PAGE = 'countdown-page'
+export const LOGIN_PAGE = '/auth/login'
+export const SIGNUP_PAGE = '/auth/signup'

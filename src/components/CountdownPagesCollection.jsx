@@ -1,15 +1,17 @@
-import React, { useState, useContext} from 'react'
-import { Link } from 'react-router-dom'
+import React, { useState, useContext, useEffect, useCallback } from 'react'
 import styled from "styled-components"
 import CoundownPage from './CountDownPage'
 import { FirebaseContext } from '../backend'
 import Loader from './Loader'
-import { COUNTDOWN_PREVIEW } from '../constants/routes'
-import { SmallBtn, AddIcon, Text } from './Shared'
+import { Text } from './Shared'
 
 const CountdownPageWrapper = styled.div.attrs({
-    className: 'h-auto md:w-2/3 text-gray-300 w-full'
-})``
+    className: 'h-auto lg:w-4/6 md:w-2/3 text-gray-300 w-full'
+})`
+    @media (min-width: 1536px) { 
+        max-width: 1024px;
+    }
+`
 
 const HeaderTab = styled.div.attrs({
     className: `flex w-full h-auto border-b-2 justify-between 
@@ -25,53 +27,54 @@ const NavBtn = styled.button.attrs(({selected}) => ({
 
 
 export default () => {
-    const [pages, setPages] = useState([])
-    const [selected, select] = useState('collection')
-    const [isLoading, setLoader] = useState(true)
+    const [collectionPages, setCollectionPages] = useState([])
+    const [myPages, setMyPages] = useState([])
+    const [selected, select] = useState('collection') // navbar selection
+    const [isLoading, setLoader] = useState(false)
     const firebase = useContext(FirebaseContext)
-
-    React.useEffect(() => {
-        getCollection()
-    },[])
 
     const getCollection = () => {
         setLoader(true)
-        firebase.getCountdownPagesData().then((data) => {
-            if (data) {
-                setPages(data)
-            } else {
-                setPages([])
-            }
-            
-            setLoader(false)
-        })
-    }
 
-    const getMyPages = () => {
-        const user = firebase.getUser
-        setLoader(true)
-        if (user) {
-            firebase.getUserCountdownPagesData().then((data) => {
+        if (collectionPages.length === 0) {
+            firebase.getCountdownPagesData().then((data) => {
                 if (data) {
-                    setPages(data)
+                    setCollectionPages(data)
                 } else {
-                    setPages([])
+                    setCollectionPages([])
                 }
-                
                 setLoader(false)
             })
         } else {
-            const data = JSON.parse(localStorage.getItem('mypages'));
-
-            if (data) {
-                setPages(data)
-            } else {
-                setPages([])
-            }
-            
             setLoader(false)
         }
     }
+
+    const getMyPages = async () => {
+        const user = firebase.getUser
+        let dataFromFirebase = []
+        setLoader(true)
+
+        if (user && myPages.length === 0) {
+            try {
+                dataFromFirebase = await firebase.getUserCountdownPagesData()
+                if (dataFromFirebase === null) {
+                    dataFromFirebase = []
+                }
+            } catch (error) {
+                dataFromFirebase = []
+            }
+        } 
+
+        let localData = JSON.parse(localStorage.getItem('mypages'))
+
+        if (localData) setMyPages(dataFromFirebase.concat(localData.pages))
+        setLoader(false)
+    }
+
+    useEffect(() => {
+        getCollection()
+    }, [])
 
     return (
         <CountdownPageWrapper>
@@ -79,36 +82,52 @@ export default () => {
                 <div className="h-full flex justify-center items-center"> 
                     <NavBtn className="mr-1" selected={selected === 'collection'}
                         onClick={() => {
-                            getCollection()
                             select('collection')
+                            getCollection()
                         }}
                     >
                         <Text>Collection</Text>
                     </NavBtn>
                     <NavBtn selected={selected === 'mypages'} 
                         onClick={() => {
-                            getMyPages()
                             select('mypages')
+                            getMyPages()
                         }}
                     >
                         <Text className="mx-2">My Pages</Text>
                     </NavBtn>
                 </div>
-                <div>
-                    
-                </div>
-
-                {/* <Link to={`/default/${COUNTDOWN_PREVIEW}`}>
-
-                </Link> */}
             </HeaderTab>
+
+            
 
             {isLoading ? <Loader /> :
                 (
-                    <div className='flex justify-start flex-wrap mt-20'>
-                        {pages.map((page, index) => 
-                            <CoundownPage key={index} pageData={{ ...page.data(), freeze: true, cache: false }} />
-                        )}
+                    <div className='flex justify-start items-stretch flex-wrap mt-10'>
+                        {selected === 'collection' ? 
+                            <div className='text-gray-700 ml-3 mb-3 text-center w-full'>
+                                <p>Pick one of the styles below and start customizing!</p>
+                                <p>Countdowns you share will also appear here!</p>
+                            </div>
+                            :
+                            <p className='mb-3'></p>}
+                        {selected === 'collection' ? collectionPages.map((page, index) => {
+                            const data = page.data ? page.data() : page
+                            return <CoundownPage 
+                                key={index} 
+                                pageData={{ ...data, freeze: true, cache: false }}
+                                typeData={selected}
+                            />
+                        }) : null}
+
+                        {selected === 'mypages' ? myPages.map((page, index) => {
+                            const data = page.data ? page.data() : page
+                            return <CoundownPage 
+                                key={index} 
+                                pageData={{ ...data, freeze: true, cache: false }}
+                                typeData={selected}
+                            />
+                        }) : null}
                     </div>
                 )
             }       

@@ -7,6 +7,7 @@ import { Main, SidePanel, BottomPanel, Loader } from '../components'
 import { SideBarWraper, Customize } from '../components/Shared'
 import InitState from '../initState'
 import WebFont from 'webfontloader'
+import short from 'short-uuid'
 import "../css/custom.css"
 
 
@@ -19,46 +20,62 @@ export default () => {
 
     const { countdownId } = useParams()
     const firebase = useContext(FirebaseContext)
-    // const { useTime, useDate } = state
+    const translator = short()
     
     useEffect(() => {
-        if (countdownId !== 'default') {
-            firebase.getCountdownPageData(countdownId).then((data) =>{
-                WebFont.load({
-                    google: {
-                        families: [data.fontFamily]
-                    }
-                })
+        const id = countdownId.split('_')
+        if (id[0] === 'local') {
+            let localData = JSON.parse(localStorage.getItem('mypages'))
 
-                if (data.useDate) {
-                    const value = data.useDateString
-
-                    // today date format
-                    const now = new Date(Date.now())
-                    const seconds = moment(value).diff(moment(now), 'seconds', true).toString()
-
-                    const {d, h, m, s} = convert(seconds)
-                    if (d < 0) {
-                        data = { ...data,  days: 0, hours: 0,
-                            minutes: 0, seconds: 0}
-                    } else {
-                        data = { ...data, days: d, hours: h,
-                            minutes: m, seconds: s }
-                    }
-                }
-
-                if (data.useTime) {
-                    const dateOptions = { year: 'numeric', month: 'long', day: 'numeric' }
-                    const date =  new Date(Date.now()).toLocaleString('en-US', dateOptions)
-                    data = { ...data, date }
-                }
-
-                setState(data)
-            })
+            if (localData) {
+                const data = localData.pages[Number(id[1])]
+                setData(data)
+            }
         } else {
-            setState(InitState)
+            
+            let id = translator.toUUID(countdownId)
+
+            firebase.getCountdownPageData(id).then((data) =>{
+                setData(data)
+            })
         }
     }, [])
+
+    const setData = (data) => {
+        if (!data) return 
+        WebFont.load({
+            google: {
+                families: [data.fontFamily]
+            }
+        })
+
+        if (data.useDate) {
+            // uses the date key on the data for calculation.
+            // overides the hour, day, min, sec
+            const value = data.useDateString
+
+            // today date format
+            const now = new Date(Date.now())
+            const seconds = moment(value).diff(moment(now), 'seconds', true).toString()
+
+            const {d, h, m, s} = convert(seconds)
+            if (d < 0) {
+                data = { ...data,  days: 0, hours: 0,
+                    minutes: 0, seconds: 0}
+            } else {
+                data = { ...data, days: d, hours: h,
+                    minutes: m, seconds: s }
+            }
+        }
+
+        if (data.useTime) {
+            const dateOptions = { year: 'numeric', month: 'long', day: 'numeric' }
+            const date =  new Date(Date.now()).toLocaleString('en-US', dateOptions)
+            data = { ...data, date }
+        }
+
+        setState(data)
+    }
 
     const updateStateWithCache = () => {
         const {day, hour, min, sec } = cache
@@ -81,7 +98,12 @@ export default () => {
                     <div className="flex-1 bg-gray-100">
                         <Main state={{ ...state, cache: true }} updateCache={updateCache} /> 
                     </div>
-                    <BottomPanel updateState={setState} updateCache={updateStateWithCache} />
+                    <BottomPanel 
+                    updateState={setState} 
+                    updateCache={updateStateWithCache} 
+                    liveState={state}
+                    updateLiveState={setState}
+                    />
                 </div>
                 <Customize 
                     onClick={() => updateModal('0')}> 

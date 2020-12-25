@@ -36,10 +36,9 @@ export default ({ state, updateState, navigation, updateHistory }) => {
                     type='text'
                     value={title}
                     maxLength={35}
-                    pattern='/[a-zA-Z0-9]+/'
                     onChange={(e) => {
                         e.preventDefault()
-                        if (e.target.value.match('^[a-zA-Z0-9 ]+$')) {
+                        if (e.target.value.match(/^[a-zA-Z0-9!@#$%^&*()_, \-]*$/)) {
                             updateState({...state, title: e.target.value})
                         }
                     }}
@@ -73,7 +72,6 @@ export default ({ state, updateState, navigation, updateHistory }) => {
                             className="w-1/4 mr-3" 
                             min={0} max={99}
                             maxLength={2}
-                            defaultValue={0}
                             value={days}
                             onChange={(e) => {
                                 const value = e.target.value
@@ -87,7 +85,6 @@ export default ({ state, updateState, navigation, updateHistory }) => {
                             min={0} max={23}
                             maxLength={2}
                             value={hours}
-                            defaultValue={0}
                             onChange={(e) => {
                                 const value = e.target.value
                                 if (value <= 23)
@@ -99,7 +96,6 @@ export default ({ state, updateState, navigation, updateHistory }) => {
                             className="w-1/4 mr-3" 
                             min={0} max={59}
                             value={minutes}
-                            defaultValue={0}
                             onChange={(e) => {
                                 const value = e.target.value
                                 if (value <= 59)
@@ -111,7 +107,6 @@ export default ({ state, updateState, navigation, updateHistory }) => {
                             className="w-1/4" 
                             min={0} max={59}
                             value={seconds}
-                            defaultValue={0}
                             onChange={(e) => {
                                 const value = e.target.value
                                 if (value <= 59)
@@ -169,16 +164,22 @@ export default ({ state, updateState, navigation, updateHistory }) => {
                 </RowBox>
             </CustomColumnBox>
 
+            {state.useTime ? 
+                (<CustomColumnBox>
+                    <SmallBtn
+                        selected={!state.freeze}
+                        className="w-1/3 px-3"
+                        onClick={() => {
+                            updateState((prev) => ({ ...state, freeze: !prev.freeze  }))
+                        }}
+                    >
+                        {state.freeze ? 'Start' : 'Freeze'}
+                    </SmallBtn>
+                </CustomColumnBox>) : null}
+
+            
             <CustomColumnBox>
-                <SmallBtn
-                    selected={!state.freeze}
-                    className="w-1/3 px-3"
-                    onClick={() => {
-                        updateState((prev) => ({ ...state, freeze: !prev.freeze  }))
-                    }}
-                >
-                    {state.freeze ? 'Start' : 'Freeze'}
-                </SmallBtn>
+                <Separator />
             </CustomColumnBox>
 
             <CustomColumnBox>
