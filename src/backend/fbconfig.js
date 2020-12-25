@@ -72,10 +72,12 @@ class Firebase {
 
 	getUserCountdownPagesData = async () => {
 		const userId = this.getUser.uid
+
 		try {
 			const data = await this.db.collection("countdownpagedata")
 						.where('user', '==', userId)
 						.get()
+
 			return data.docs
 		} catch (err) {
 			return null

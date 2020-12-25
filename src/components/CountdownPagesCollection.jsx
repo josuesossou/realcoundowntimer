@@ -58,17 +58,22 @@ export default () => {
         if (user && myPages.length === 0) {
             try {
                 dataFromFirebase = await firebase.getUserCountdownPagesData()
-                if (dataFromFirebase === null) {
+
+                if (!dataFromFirebase) {
                     dataFromFirebase = []
                 }
             } catch (error) {
                 dataFromFirebase = []
             }
         } 
-
         let localData = JSON.parse(localStorage.getItem('mypages'))
 
-        if (localData) setMyPages(dataFromFirebase.concat(localData.pages))
+        if (!localData) {
+            localData = {pages: [] }
+        }
+
+        setMyPages(dataFromFirebase.concat(localData.pages))
+
         setLoader(false)
     }
 
