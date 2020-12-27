@@ -9,7 +9,6 @@ import Home from './pages/Home'
 import Preview from './pages/Preview'
 import CountDownPage from './pages/CountDown'
 import AuthPage from './pages/AuthPage'
-import FlashCard from './components/FlashCard'
 
 import * as ROUTES from './constants/routes'
 
