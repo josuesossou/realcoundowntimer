@@ -123,7 +123,7 @@ export default ({ state, updateCache }) => {
                 </div>
 
                 {ended ? (
-                    <div style={{ fontSize: '8vw' }} className="mb-20">{state.endPhrase}</div>
+                    <div style={{ fontSize: '8vw' }} className="mb-20 text-center">{state.endPhrase}</div>
                 )
                 : 
                 (
