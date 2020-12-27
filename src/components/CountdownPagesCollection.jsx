@@ -3,7 +3,7 @@ import styled from "styled-components"
 import CoundownPage from './CountDownPage'
 import { FirebaseContext } from '../backend'
 import Loader from './Loader'
-import { Text } from './Shared'
+import { Text, SmallBtn } from './Shared'
 
 const CountdownPageWrapper = styled.div.attrs({
     className: 'h-auto lg:w-4/6 md:w-2/3 text-gray-300 w-full'
@@ -118,13 +118,32 @@ export default () => {
                                 <p>Countdowns you share will also appear here!</p>
                             </div>
                         : null}
+
                         {selected === 'mypages' && myPages.length === 0 ?
                             <div className='text-gray-700 ml-3 mb-3 text-center w-full'>
                                 <p>
-                                    No countdown page found
+                                    You have not created any countdown page yet
+                                </p>
+                                <SmallBtn onClick={() => {
+                                    select('collection')
+                                    getCollection()
+                                }}>
+                                    Get Started
+                                </SmallBtn>
+                            </div>
+                        : null}
+
+                        {selected === 'mypages' && myPages.length !== 0 ?
+                            <div className='text-gray-700 ml-3 mb-3 text-center w-full'>
+                                <p>
+                                    Here are all the countdown you have created
+                                </p>
+                                <p>
+                                    The ones you created locally will also show up here
                                 </p>
                             </div>
                         : null}
+
                         {selected === 'collection' ? collectionPages.map((page, index) => {
                             const data = page.data ? page.data() : page
                             return <CoundownPage 

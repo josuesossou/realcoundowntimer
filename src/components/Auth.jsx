@@ -4,7 +4,7 @@ import { FormInput, SmallBtn, Text } from './Shared'
 import Logo from './Logo'
 import styled from 'styled-components'
 import { FirebaseContext } from '../backend'
-import { LOGIN_PAGE, SIGNUP_PAGE } from '../constants/routes'
+import { LOGIN_PAGE, SIGNUP_PAGE, PASSWORD_RESET_PAGE } from '../constants/routes'
 
 const FormWrapper = styled.div.attrs({
     className: 'w-full md:w-2/5 sm:w-2/3 lg:w-1/4'
@@ -14,10 +14,10 @@ const LabelInput = styled.label.attrs(({ err }) => ({
    className: `mb-3 block ${err ? 'border-b-2 border-red-400' : ''}`
 }))``
 
-const ErrorWrapper = styled.div.attrs({
-    className: `border-2 border-red-300 bg-red-300 text-red-900
-    absolute w-full sm:w-2/3 md:w-1/2 p-3 top-0`
-})``
+const ErrorWrapper = styled.div.attrs(({ success }) => ({
+    className: `${success ? 'bg-green-300 text-green-900' :'bg-red-300 text-red-900'}
+    absolute w-full sm:w-2/3 md:w-1/2 p-3 top-0 text-center`
+}))``
 
  
 export default () => {
@@ -25,7 +25,7 @@ export default () => {
     const history = useHistory()
     const pattern = /^[a-zA-Z0-9 ]+$/
     const passwordPattern = /^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])(?=.*[!@#$%^&* ])([a-zA-Z0-9!@#$%^&* ]{8,30})$/
-    const [errorMsg, setMessage] = useState({ message: '', errLocation: 0 })
+    const [errorMsg, setMessage] = useState({ message: '', errLocation: 0, success: false })
     const [formData, formUpdate] = useState({
         email: '',
         password: '',
@@ -48,7 +48,7 @@ export default () => {
         try {
             await firebase.doSignInWithEmailAndPassword(email, password)
             firebase.setUser()
-            history.goBack()
+            history.push('/')
         } catch (error) {
             let message
             if (error.code === 'auth/user-not-found') {
@@ -68,7 +68,23 @@ export default () => {
         try {
             await firebase.doCreateUserWithEmailAndPassword(email, password)
             firebase.setUser()
-            history.goBack()
+            history.push('/')
+        } catch (error) {
+            setMessage({ 
+                message: error.message,
+                errLocation: 10
+            })
+        }
+    }
+
+    const resetPwd = async ({ email }) => {
+        try {
+            await firebase.doPasswordReset(email)
+            setMessage({ 
+                message: `Password reset email was sent to ${email}`,
+                errLocation: 10,
+                success: true
+            })
         } catch (error) {
             setMessage({ 
                 message: error.message,
@@ -87,6 +103,10 @@ export default () => {
                 your email is in the form: example@domain.com`,
                 errLocation: 1
             })
+        }
+
+        if (type === 'resetpwd') {
+            return resetPwd(formData)
         }
 
         if (!formData.password.match(passwordPattern)) {
@@ -125,7 +145,7 @@ export default () => {
                         flex justify-center items-center text-gray-800`}
         >
            { errorMsg.errLocation !== 0 ?
-                (<ErrorWrapper>
+                (<ErrorWrapper success={errorMsg.success}>
                     {errorMsg.message}
                 </ErrorWrapper>) : 
             null}
@@ -134,6 +154,14 @@ export default () => {
                 <div className='w-full flex justify-center mb-5'>
                     <Logo />
                 </div>
+
+                <div className='w-full flex justify-center mb-5'>
+                    <Text className='text-md'>
+                        {type === 'signup' ? 'Sign Up': ''} 
+                        {type === 'login' ? 'Login' : ''}
+                        {type === 'resetpwd' ? 'Password Reset' : ''}
+                    </Text>
+                </div>
                 
                 <form className='mb-3 pb-5 border-b border-gray-400' onSubmit={submit}>
                     <LabelInput err={errorMsg.errLocation === 1}>
@@ -141,7 +169,6 @@ export default () => {
                         <FormInput
                             type={'email'}
                             value={formData.email}
-                            // pattern={'/^.@[a-zA-Z0-9.]+.[a-z]{1-3}$/'}
                             onChange={(e) => {
                                 const val = e.target.value
                                 formUpdate({ ...formData, email: '' + val })
@@ -149,20 +176,22 @@ export default () => {
                             }}
                         />
                     </LabelInput>
-
-                    <LabelInput err={errorMsg.errLocation === 2 || errorMsg.errLocation === 5}>
-                        <Text>Password</Text>
-                        <FormInput
-                            type={'password'}
-                            value={formData.password}
-                            min={8}
-                            pattern={pattern}
-                            onChange={(e) => {
-                                const val = e.target.value
-                                formUpdate({ ...formData, password: '' + val })
-                            }}
-                        />
-                    </LabelInput>
+                    
+                    {type !== 'resetpwd' ? (
+                        <LabelInput err={errorMsg.errLocation === 2 || errorMsg.errLocation === 5}>
+                            <Text>Password</Text>
+                            <FormInput
+                                type={'password'}
+                                value={formData.password}
+                                min={8}
+                                pattern={pattern}
+                                onChange={(e) => {
+                                    const val = e.target.value
+                                    formUpdate({ ...formData, password: '' + val })
+                                }}
+                            />
+                        </LabelInput>
+                    ) : null}
 
                     {type === 'signup' ? (<LabelInput err={errorMsg.errLocation === 3 || errorMsg.errLocation === 5}>
                         <Text>Re-Enter Password</Text>
@@ -177,40 +206,34 @@ export default () => {
                             }}
                         />
                     </LabelInput>) : null}
-
-                    {/* <LabelInput err={errorMsg.errLocation === 4}>
-                        Full Name
-                        <FormInput
-                            type={'text'}
-                            value={formData.fullName}
-                            pattern={pattern}
-                            onChange={(e) => {
-                                const val = e.target.value
-                                formUpdate({ ...formData, fullName: '' + val })
-
-                            }}
-                        />
-                    </LabelInput> */}
                     <br />
                     <SmallBtn className='w-full'>
                         Submit
                     </SmallBtn>
                 </form>
-
-                {/* <SmallBtn className='w-full'>
-                    {type === 'login' ? 'Login' : 'Sign up'} Using Your Google Account
-                </SmallBtn> */}
                 
                 {type === 'login' ? 
                     (<Text className='text-'>
                         Are you new here?  
                         <Link to={SIGNUP_PAGE} className='font-extrabold'> Sign up</Link>
-                    </Text>) : 
+                        <br />
+                        Forgot your password? 
+                        <Link to={PASSWORD_RESET_PAGE} className='font-extrabold'> Reset</Link>
+                    </Text>) : null}
+                {type === 'signup' ?
                     (<Text>
                         Already have an account? 
                         <Link to={LOGIN_PAGE} className='font-extrabold'> Login</Link>
-                    </Text>)
-                }
+                    </Text>) : null}
+                
+                {type === 'resetpwd' ?
+                    (<Text>
+                        Already have an account? 
+                        <Link to={LOGIN_PAGE} className='font-extrabold'> Login</Link>
+                        <br />
+                        Are you new here?  
+                        <Link to={SIGNUP_PAGE} className='font-extrabold'> Sign up</Link>
+                    </Text>) : null}
             </FormWrapper>
         </div>   
     )
