@@ -20,14 +20,14 @@ const LargeText = styled.div.attrs(({ heirachy }) => ({
 }))`
     box-sizing: content-box;
     line-height: normal;
-    font-size: 10vw;
+    font-size: 8vw;
     background: ${props => props.bg};
 `
 const ColonStyle = styled.p.attrs(({ heirachy }) => ({
     className: `px-2`
 }))`
     line-height: normal;
-    font-size: 10vw;
+    font-size: 8vw;
     background: ${props => props.bg};
 `
 const CounterWrapper = styled.div.attrs({
