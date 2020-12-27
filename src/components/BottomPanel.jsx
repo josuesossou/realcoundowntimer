@@ -105,7 +105,7 @@ export default ({ updateCache, liveState, updateLiveState }) => {
                     <Text className='text-gray-700 py-2 md:text-center'>
                         This countdown is saved locally, 
                         <Link className='font-extrabold' to={LOGIN_PAGE}> login</Link> or 
-                        <Link className='font-extrabold' to={SIGNUP_PAGE}> register</Link> to access anywhere
+                        <Link className='font-extrabold' to={SIGNUP_PAGE}> register</Link> to share it with everyone
                     </Text>)
                 }
                 <RowSeparator />
