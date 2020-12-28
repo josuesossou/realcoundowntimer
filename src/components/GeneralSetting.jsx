@@ -189,7 +189,7 @@ export default ({ state, updateState, navigation, updateHistory }) => {
                         updateHistory({ ...navigation, navLink: 'End Phrase'})
                     }}
                 >
-                    Show End Phrase
+                    Final Text
                     <RightArrow>
                         <AngleRightIcon />
                     </RightArrow>

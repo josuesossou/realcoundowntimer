@@ -18,7 +18,7 @@ export default ({ state, updateState }) => {
             </CustomColumnBox>
 
             <CustomColumnBox>
-                <HeaderText>End Phrase</HeaderText>
+                <HeaderText>Final Text</HeaderText>
                 <InputBox
                     className="py-2"
                     type='text'

@@ -142,7 +142,7 @@ const UrlSetting = ({ state, updateState }) => {
             <HeaderText>Image Url</HeaderText>
             <InputBox 
                 type="text"
-                defaultValue='Paste a url'
+                placeholder='Paste a url'
                 className="py-2"
                 onChange={(e) => {
                     updateState({ ...state, urlBg: e.target.value })
