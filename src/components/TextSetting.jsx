@@ -50,7 +50,7 @@ export default ({ state, updateState, navigation, updateHistory }) => {
 
                 <HeaderText>Fonts</HeaderText>
                 <FontPicker
-					apiKey={process.env.REACT_FONT_API_KEY}
+					apiKey='AIzaSyCxhfAU4B8V5whdC-ay_SI5Bh3fCGGjOks'
 					activeFontFamily={state.fontFamily}
 					onChange={(font) =>
 						updateState({ ...state, fontFamily: font.family })
