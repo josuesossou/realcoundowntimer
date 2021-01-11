@@ -1,7 +1,9 @@
 import React from 'react'
 import styled from 'styled-components'
-import Navbar from '../components/Navbar'
-import ContdownPageList from '../components/CountdownPagesCollection'
+import {Navbar, CountdowPageList, Footer} from '../components'
+// import Navbar from '../components/Navbar'
+// import ContdownPageList from '../components/CountdownPagesCollection'
+
 
 const ContentWrapper = styled.div.attrs({
     className: 'flex justify-center w-full h-full'
@@ -9,11 +11,14 @@ const ContentWrapper = styled.div.attrs({
 
 export default () => {
     return (
-        <div className='bg-gray-100 min-h-screen'>
+        <>
             <Navbar />
-            <ContentWrapper>
-                <ContdownPageList />
-            </ContentWrapper>
-        </div>
+            <div className='bg-gray-100 min-h-screen'>
+                <ContentWrapper>
+                    <CountdowPageList />
+                </ContentWrapper>
+            </div>
+            {/* <Footer /> */}
+        </>
     )
 }

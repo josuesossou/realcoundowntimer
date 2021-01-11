@@ -75,7 +75,7 @@ export default ({ state, updateState, navigation, updateHistory }) => {
                             value={days}
                             onChange={(e) => {
                                 const value = e.target.value
-                                if (value <= 99)
+                                if (value >= 0 && value <= 99)
                                     updateState({ ...state, days: value })
                             }}
                         /> 
@@ -87,7 +87,7 @@ export default ({ state, updateState, navigation, updateHistory }) => {
                             value={hours}
                             onChange={(e) => {
                                 const value = e.target.value
-                                if (value <= 23)
+                                if (value >= 0 && value <= 23)
                                     updateState({ ...state, hours: value })
                             }}
                         /> 
@@ -98,7 +98,7 @@ export default ({ state, updateState, navigation, updateHistory }) => {
                             value={minutes}
                             onChange={(e) => {
                                 const value = e.target.value
-                                if (value <= 59)
+                                if (value >= 0 && value <= 59)
                                     updateState({ ...state, minutes: value })
                             }}
                         />
@@ -109,7 +109,7 @@ export default ({ state, updateState, navigation, updateHistory }) => {
                             value={seconds}
                             onChange={(e) => {
                                 const value = e.target.value
-                                if (value <= 59)
+                                if (value >= 0 && value <= 59)
                                     updateState({ ...state, seconds: value })
                             }}
                         />
@@ -143,15 +143,15 @@ export default ({ state, updateState, navigation, updateHistory }) => {
             <Separator />
             <CustomColumnBox>
                 <HeaderText>Hide</HeaderText>
-                <RowBox>
+                <RowBox className='flex-warp justify-center items-center'>
                     <SmallBtn
                         className="w-1/3" 
                         selected={state.showDay}
                         onClick={() => updateState((prev) => ({...prev, showDay: !prev.showDay, 
                                 showHour: !prev.showDay ? true : prev.showHour}))}
                     >Days</SmallBtn>
-                    <SmallBtn 
-                        className="w-1/3 mx-3" 
+                    <SmallBtn
+                        className="w-1/3" 
                         selected={state.showHour}
                         onClick={() => updateState((prev) => ({...prev, showHour: !prev.showHour, 
                                             showDay: !prev.showHour ? prev.showDay : false}))}
@@ -160,12 +160,18 @@ export default ({ state, updateState, navigation, updateHistory }) => {
                         className="w-1/3" 
                         selected={state.showDate}
                         onClick={() => updateState((prev) => ({...prev, showDate: !prev.showDate}))}
-                    >Date</SmallBtn> 
+                    >Date</SmallBtn>
+                    <SmallBtn 
+                        className="w-1/3" 
+                        selected={state.showLabel}
+                        onClick={() => updateState((prev) => ({...prev, showLabel: !prev.showLabel}))}
+                    >Label</SmallBtn> 
                 </RowBox>
             </CustomColumnBox>
 
             {state.useTime ? 
                 (<CustomColumnBox>
+                    <HeaderText></HeaderText>
                     <SmallBtn
                         selected={!state.freeze}
                         className="w-1/3 px-3"
@@ -231,7 +237,7 @@ export default ({ state, updateState, navigation, updateHistory }) => {
                         updateHistory({ ...navigation, navLink: 'Text'})
                     }}
                 >
-                    Text
+                    Text Style
                     <RightArrow>
                         <AngleRightIcon />
                     </RightArrow>

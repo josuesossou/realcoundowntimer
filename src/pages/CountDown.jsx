@@ -41,6 +41,27 @@ export default () => {
                 }
             })
 
+            if (data.showLabel === undefined) {
+                data = { ...data, showLabel: true }
+            }
+
+            if (data.timerFontStyle === undefined || 
+                data.titleFontStyle === undefined ||
+                data.dateFontStyle === undefined ) {
+                data = { 
+                    ...data, 
+                    timerFontStyle: {
+                        fontSize: '8vw'
+                    },
+                    dateFontStyle: {
+                        fontSize: '8vw'
+                    }, 
+                    titleFontStyle: {
+                        fontSize: '8vw'
+                    }, 
+                }
+            }
+
             if (data.useDate) {
                 // uses the date key on the data for calculation.
                 // overides the hour, day, min, sec

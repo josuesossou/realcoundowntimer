@@ -2,7 +2,7 @@ import styled from "styled-components";
 import tw from "twin.macro"
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faAngleRight, faAngleLeft, faArrowLeft, faTimes,
-     faPlus, faTh, faShareAlt, faHeart } from '@fortawesome/free-solid-svg-icons'
+     faPlus, faTh, faShareAlt, faHeart, faLock } from '@fortawesome/free-solid-svg-icons'
 
 // Logo
 export const Logo = styled.div.attrs({
@@ -46,6 +46,12 @@ export const InputBox = styled.input.attrs({
     className: 'transition duration-500 ease-in-out bg-gray-900 focus:bg-gray-700 text-gray-300 pl-2 py-2 w-full'
 })`
     outline: 0 !important   
+`
+
+export const SelectBox = styled.select.attrs({
+    className: 'transition duration-500 ease-in-out bg-gray-900 focus:bg-gray-700 text-gray-300 pl-2 py-2 w-auto'
+})`
+    outline: 0 !important;
 `
 
 const Input = styled.input.attrs({
@@ -157,3 +163,4 @@ export const AddIcon = () => <FontAwesomeIcon icon={faPlus} />
 export const FilterIcon = () => <FontAwesomeIcon icon={faTh} color='#1a202c' />
 export const ShareIcon = () => <FontAwesomeIcon icon={faShareAlt} color='#e2e8f0' />
 export const LikeIcon = ({color}) => <FontAwesomeIcon icon={faHeart} color={color} />
+export const LockIcon = () => <FontAwesomeIcon icon={faLock} />

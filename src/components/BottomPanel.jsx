@@ -62,8 +62,8 @@ export default ({ updateCache, liveState, updateLiveState }) => {
     }
 
     return (
-        <div className={`min-h-20 w-full bg-gray-200 relative md:flex 
-                        flex-column md:justify-between 
+        <div className={`min-h-20 w-full bg-gray-200 absolute bottom-0 md:flex 
+                        flex-column md:justify-between z-10
                         justify-center items-center pl-20 py-3`}>
             <div className='flex'>
                 <Logo />
@@ -103,7 +103,7 @@ export default ({ updateCache, liveState, updateLiveState }) => {
                     </>
                 ) : (
                     <Text className='text-gray-700 py-2 md:text-center'>
-                        This countdown is saved locally, 
+                        This countdown will be saved locally, 
                         <Link className='font-extrabold' to={LOGIN_PAGE}> login</Link> or 
                         <Link className='font-extrabold' to={SIGNUP_PAGE}> register</Link> to share it with everyone
                     </Text>)

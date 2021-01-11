@@ -20,14 +20,14 @@ const LargeText = styled.div.attrs(({ heirachy }) => ({
 }))`
     box-sizing: content-box;
     line-height: normal;
-    font-size: 8vw;
+    font-size: ${props => props.fontSize};
     background: ${props => props.bg};
 `
-const ColonStyle = styled.p.attrs(({ heirachy }) => ({
+const ColonStyle = styled.p.attrs({
     className: `px-2`
-}))`
+})`
     line-height: normal;
-    font-size: 8vw;
+    font-size: ${props => props.fontSize};
     background: ${props => props.bg};
 `
 const CounterWrapper = styled.div.attrs({
@@ -106,7 +106,7 @@ export default ({ state, updateCache }) => {
     }, [state.seconds, state.minutes, state.hours, state.days, state.freeze, tick])
 
     return (
-        <div className="h-full w-full shadow-lg relative">
+        <div className="h-full w-full shadow-lg relative overflow-hidden">
             {state.bgType === 'solid' ? 
                 <BgContent bg={state.bgColor} /> : null} 
 
@@ -123,7 +123,7 @@ export default ({ state, updateCache }) => {
                 </div>
 
                 {ended ? (
-                    <div style={{ fontSize: '8vw' }} className="mb-20 text-center">{state.endPhrase}</div>
+                    <div style={{ fontSize: state.timerFontStyle.fontSize }} className="mb-20 text-center">{state.endPhrase}</div>
                 )
                 : 
                 (
@@ -131,15 +131,17 @@ export default ({ state, updateCache }) => {
                         <CustomColumnBox 
                             bg={state.counterBgHeirearchy >= 2 ? state.counterBgColor : ''}
                             heirachy={state.counterBgHeirearchy}>
-                            <LargeText 
+                            <LargeText
+                                fontSize={state.timerFontStyle.fontSize}
                                 bg={state.counterBgHeirearchy >= 1 ? state.counterBgColor : ''}
                                 heirachy={state.counterBgHeirearchy}>
                                 {`${time.sec < 10 ? "0" : ""}${time.sec}`}
                             </LargeText>
-                            <SmallText>seconds</SmallText>
+                            {state.showLabel? <SmallText>seconds</SmallText> : null}
                         </CustomColumnBox>
                     
                         <ColonStyle
+                            fontSize={state.timerFontStyle.fontSize}
                             bg={state.counterBgHeirearchy >= 3 ? state.counterBgColor : ''}
                             heirachy={state.counterBgHeirearchy}
                         >:</ColonStyle>
@@ -148,28 +150,31 @@ export default ({ state, updateCache }) => {
                             bg={state.counterBgHeirearchy >= 2 ? state.counterBgColor : ''}
                             heirachy={state.counterBgHeirearchy}>
                             <LargeText 
+                                fontSize={state.timerFontStyle.fontSize}
                                 bg={state.counterBgHeirearchy >= 1 ? state.counterBgColor : ''}
                                 heirachy={state.counterBgHeirearchy}>
                                 {`${time.min < 10 ? "0" : ""}${time.min}`}
                             </LargeText>
-                            <SmallText>minutes</SmallText>
+                            {state.showLabel? <SmallText>minutes</SmallText> : null}
                         </CustomColumnBox>
                         
                         {state.showHour ? 
                             (<>
                                 <ColonStyle
+                                    fontSize={state.timerFontStyle.fontSize}
                                     bg={state.counterBgHeirearchy >= 3 ? state.counterBgColor : ''}
                                     heirachy={state.counterBgHeirearchy}
                                 >:</ColonStyle>
                                 <CustomColumnBox 
                                     bg={state.counterBgHeirearchy >= 2 ? state.counterBgColor : ''} 
                                     heirachy={state.counterBgHeirearchy}>
-                                    <LargeText 
+                                    <LargeText
+                                        fontSize={state.timerFontStyle.fontSize}
                                         bg={state.counterBgHeirearchy >= 1 ? state.counterBgColor : ''}
                                         heirachy={state.counterBgHeirearchy}>
                                         {`${time.hour < 10 ? "0" : ""}${time.hour}`}
                                     </LargeText>
-                                    <SmallText>hours</SmallText>
+                                    {state.showLabel ? <SmallText>hours</SmallText> : null}
                                 </CustomColumnBox>
                             </>
                         ) : null}
@@ -177,6 +182,7 @@ export default ({ state, updateCache }) => {
                         {state.showDay ? 
                             (<>
                                 <ColonStyle
+                                    fontSize={state.timerFontStyle.fontSize}
                                     bg={state.counterBgHeirearchy >= 3 ? state.counterBgColor : ''}
                                     heirachy={state.counterBgHeirearchy}
                                 >:</ColonStyle>
@@ -184,11 +190,12 @@ export default ({ state, updateCache }) => {
                                     bg={state.counterBgHeirearchy >= 2 ? state.counterBgColor : ''}
                                     heirachy={state.counterBgHeirearchy}>
                                     <LargeText 
+                                        fontSize={state.timerFontStyle.fontSize}
                                         bg={state.counterBgHeirearchy >= 1 ? state.counterBgColor : ''}
                                         heirachy={state.counterBgHeirearchy}>
                                         {`${time.day < 10 ? "0" : ""}${time.day}`}
                                     </LargeText>
-                                    <SmallText>days</SmallText>
+                                    {state.showLabel? <SmallText>days</SmallText> : null}
                                 </CustomColumnBox>
                             </>
                         ) : null}

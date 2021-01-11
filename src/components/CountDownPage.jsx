@@ -6,7 +6,7 @@ import moment from 'moment'
 import convert from '../constants/convertSecToTime'
 import short from 'short-uuid'
 import { COUNTDOWN_PREVIEW, COUNTDOWN_PAGE } from '../constants/routes'
-import { SmallBtn, BgContent, ColumnBox, Text, LikeIcon } from './Shared'
+import { SmallBtn, BgContent, ColumnBox, Text, LockIcon } from './Shared'
 
 const PageContainer = styled.div.attrs({
     className: `lg:w-2/6 sm:w-3/6 w-full relative
@@ -224,7 +224,11 @@ export default ({ pageData, typeData }) => {
                         <Text className='text-gray-800'>
                             <Link to={`/${COUNTDOWN_PAGE}/${countdownId}`} target='_blank'>Preview</Link>
                         </Text>
-                    ) : null}
+                    ) : (
+                        <Text className='text-gray-500'>
+                            <LockIcon />
+                        </Text>
+                    )}
                 </BottomBar>
             </ContentWrapper>
         </PageContainer>

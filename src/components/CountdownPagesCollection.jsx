@@ -145,7 +145,12 @@ export default () => {
                         : null}
 
                         {selected === 'collection' ? collectionPages.map((page, index) => {
-                            const data = page.data ? page.data() : page
+                            let data = page.data ? page.data() : page
+
+                            if (data.showLabel === undefined) {
+                                data = { ...data, showLabel: true }
+                            }
+
                             return <CoundownPage 
                                 key={index} 
                                 pageData={{ ...data, freeze: true, cache: false }}

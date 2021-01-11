@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react'
+import React, { useState } from 'react'
 import FontPicker from "font-picker-react";
 import fontStr from '../fonts.js'
 import { 
@@ -10,10 +10,24 @@ import {
     HeaderText, 
     Wrapper, 
     Separator,
+    InputBox,
+    RowBox,
+    SelectBox,
+    RadioDot,
+    RadioSelection
 } from './Shared'
 
 export default ({ state, updateState, navigation, updateHistory }) => {
     const fontsArray = fontStr.split('\n')
+    const [fontSizeFor, setFontFor] = useState('timerFontStyle')
+    const [fontSize, setFontSize] = useState(8)
+    const [fontUnit, setFontUnit] = useState('vw')
+
+    const fontFor = [
+        {title: 'Timer', for: 'timerFontStyle'},
+        // {title: 'Title', for: 'titleFontStyle'},
+        // {title: 'Date', for: 'dateFontStyle'},
+    ]
 
     return (  
         <Wrapper>
@@ -36,7 +50,7 @@ export default ({ state, updateState, navigation, updateHistory }) => {
 
                 <HeaderText>Fonts</HeaderText>
                 <FontPicker
-					apiKey="AIzaSyCxhfAU4B8V5whdC-ay_SI5Bh3fCGGjOks"
+					apiKey={process.env.REACT_FONT_API_KEY}
 					activeFontFamily={state.fontFamily}
 					onChange={(font) =>
 						updateState({ ...state, fontFamily: font.family })
@@ -45,6 +59,52 @@ export default ({ state, updateState, navigation, updateHistory }) => {
                     limit={348}
                     className='w-full bg-gray-700'
 				/>
+
+                <Separator />
+
+                <HeaderText>Part To Edit</HeaderText>
+                {fontFor.map(font => (
+                    <RadioSelection 
+                        selected={fontSizeFor === font.for} 
+                        onClick={() => setFontFor(font.for)}>
+                        <RadioDot selected={fontSizeFor === font.for} />
+                        {font.title}
+                    </RadioSelection>
+                ))}
+
+                <Separator />
+
+                <HeaderText>Font Size</HeaderText>
+                <RowBox>
+                    <InputBox 
+                        type="number" 
+                        className="w-2/4 mr-3" 
+                        min={0}
+                        value={fontSize}
+                        onChange={(e) => {
+                            const value = e.target.value
+                            if (value >= 0) {
+                                const newSize = { ...state[fontSizeFor], fontSize: `${value}${fontUnit}` }
+                                setFontSize(value)
+                                updateState({ ...state, [fontSizeFor]: newSize })
+                            }
+                        }}
+                    />
+
+                    <SelectBox
+                        onChange={(e) => {
+                            const value = e.target.value
+                            const newSize = { ...state[fontSizeFor], fontSize: `${fontSize}${value}` }
+                            setFontUnit(value)
+                            updateState({ ...state, [fontSizeFor]: newSize })
+                        }}
+                    >
+                        <option value='em'>em-unit</option>
+                        <option value='px'>pixel</option>
+                        <option value='vw'>v-width</option>
+                    </SelectBox>
+                </RowBox>
+
             </CustomColumnBox>
         </Wrapper>
     )
