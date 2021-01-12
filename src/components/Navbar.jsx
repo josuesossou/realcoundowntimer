@@ -36,11 +36,11 @@ export default () => {
                             Feedback
                         </Link>
                     </Text>
-                    <Text className='text-center'>
+                    {/* <Text className='text-center'>
                         <Link to={INSTRUCTION}>
                             Instructions
                         </Link>
-                    </Text>
+                    </Text> */}
                 </div>
 
 

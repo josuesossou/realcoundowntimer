@@ -139,11 +139,12 @@ export default ({ state, updateState, navigation, updateHistory }) => {
 
             {state.useDate ? (
                 <CustomColumnBox>
-                    <InputBox 
+                    <InputBox
+                        id='date-time'
                         type="datetime-local"
                         min={today}
                         defaultValue={today}
-                        className="py-2"
+                        className="py-2 cursor-pointer"
                         onKeyDown={e => e.preventDefault()}
                         onChange={(e) => {
                             const value = e.target.value
