@@ -47,6 +47,20 @@ export default ({ state, updateState, navigation, updateHistory }) => {
                 </LongBtn>
 
                 <Separator />
+
+                <HeaderText>Fonts</HeaderText>
+                <FontPicker
+					apiKey={`AIzaSyCxhfAU4B8V5whdC-ay_SI5Bh3fCGGjOks`}
+					activeFontFamily={state.fontFamily}
+					onChange={(font) =>
+						updateState({ ...state, fontFamily: font.family })
+                    }
+                    families={fontsArray}
+                    limit={348}
+                    className='w-full bg-gray-700'
+				/>
+                
+                <Separator />
                 <HeaderText>Part To Edit</HeaderText>
                 {fontFor.map(font => (
                     <RadioSelection 
