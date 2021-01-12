@@ -45,12 +45,10 @@ export default ({ state, updateState, navigation, updateHistory }) => {
                         <AngleRightIcon />
                     </RightArrow>
                 </LongBtn>
-
                 <Separator />
-
                 <HeaderText>Fonts</HeaderText>
                 <FontPicker
-					apiKey='AIzaSyCxhfAU4B8V5whdC-ay_SI5Bh3fCGGjOks'
+					apiKey={`AIzaSyCxhfAU4B8V5whdC-ay_SI5Bh3fCGGjOks`}
 					activeFontFamily={state.fontFamily}
 					onChange={(font) =>
 						updateState({ ...state, fontFamily: font.family })
@@ -59,9 +57,7 @@ export default ({ state, updateState, navigation, updateHistory }) => {
                     limit={348}
                     className='w-full bg-gray-700'
 				/>
-
                 <Separator />
-
                 <HeaderText>Part To Edit</HeaderText>
                 {fontFor.map(font => (
                     <RadioSelection 
