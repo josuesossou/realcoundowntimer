@@ -1,5 +1,5 @@
 import React from 'react'
-import {Navbar, CountdowPageList, Footer} from '../components'
+import { Navbar, Feedback, Footer } from '../components'
 import { ContentWrapper } from '../components/Shared'
 
 export default () => {
@@ -7,7 +7,7 @@ export default () => {
         <div className='bg-gray-100 min-h-screen flex flex-col'>
             <Navbar />
             <ContentWrapper>
-                <CountdowPageList />
+                <Feedback />
             </ContentWrapper>
             <Footer />
         </div>

@@ -1,4 +1,4 @@
-import React, { useState, useContext, useEffect, useCallback } from 'react'
+import React, { useState, useContext, useEffect } from 'react'
 import styled from "styled-components"
 import CoundownPage from './CountDownPage'
 import { FirebaseContext } from '../backend'
@@ -6,7 +6,7 @@ import Loader from './Loader'
 import { Text, SmallBtn } from './Shared'
 
 const CountdownPageWrapper = styled.div.attrs({
-    className: 'h-auto lg:w-4/6 md:w-2/3 text-gray-300 w-full'
+    className: 'h-full lg:w-4/6 md:w-2/3 text-gray-300 w-full relative'
 })`
     @media (min-width: 1536px) { 
         max-width: 1024px;
@@ -15,7 +15,7 @@ const CountdownPageWrapper = styled.div.attrs({
 
 const HeaderTab = styled.div.attrs({
     className: `flex w-full h-auto border-b-2 justify-between 
-        border-gray-400 text-gray-800 items-center pt-10`
+        border-gray-400 text-gray-800 items-center pt-10 relative top-0`
 })``
 
 const NavBtn = styled.button.attrs(({selected}) => ({
@@ -30,7 +30,7 @@ export default () => {
     const [collectionPages, setCollectionPages] = useState([])
     const [myPages, setMyPages] = useState([])
     const [selected, select] = useState('collection') // navbar selection
-    const [isLoading, setLoader] = useState(false)
+    const [isLoading, setLoader] = useState(true)
     const firebase = useContext(FirebaseContext)
 
     const getCollection = () => {

@@ -9,6 +9,8 @@ import Home from './pages/Home'
 import Preview from './pages/Preview'
 import CountDownPage from './pages/CountDown'
 import AuthPage from './pages/AuthPage'
+import FeedbackPage from './pages/FeedbackPage'
+import InstructionPage from './pages/InstructionPage'
 
 import * as ROUTES from './constants/routes'
 
@@ -26,6 +28,12 @@ function App() {
       <Switch>
         <Route exact path={ROUTES.HOME}>
           <Home />
+        </Route>
+        <Route exact path={ROUTES.FEEDBACK}>
+          <FeedbackPage />
+        </Route>
+        <Route exact path={ROUTES.INSTRUCTION}>
+          <InstructionPage />
         </Route>
         <Route  path={`/${ROUTES.COUNTDOWN_PREVIEW}/:page/:countdownId`}>
           <Preview />

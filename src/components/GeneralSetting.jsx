@@ -74,11 +74,16 @@ export default ({ state, updateState, navigation, updateHistory }) => {
                             maxLength={2}
                             value={days}
                             onChange={(e) => {
-                                const value = e.target.value
-                                if (value >= 0 && value <= 99)
-                                    updateState({ ...state, days: value })
+                                const value = Number(e.target.value)
+                                if (value >= 0 && value <= 99) {
+                                    if (value === 0) {
+                                        updateState({ ...state, days: 0 })
+                                    } else {
+                                        updateState({ ...state, days: value })
+                                    }
+                                }
                             }}
-                        /> 
+                        />
                         <InputBox
                             type="number" 
                             className="w-1/4 mr-3" 
@@ -86,9 +91,14 @@ export default ({ state, updateState, navigation, updateHistory }) => {
                             maxLength={2}
                             value={hours}
                             onChange={(e) => {
-                                const value = e.target.value
-                                if (value >= 0 && value <= 23)
-                                    updateState({ ...state, hours: value })
+                                const value = Number(e.target.value)
+                                if (value >= 0 && value <= 23) {
+                                    if (value === 0) {
+                                        updateState({ ...state, hours: 0 })
+                                    } else {
+                                        updateState({ ...state, hours: value })
+                                    }
+                                }
                             }}
                         /> 
                         <InputBox 
@@ -97,9 +107,14 @@ export default ({ state, updateState, navigation, updateHistory }) => {
                             min={0} max={59}
                             value={minutes}
                             onChange={(e) => {
-                                const value = e.target.value
-                                if (value >= 0 && value <= 59)
-                                    updateState({ ...state, minutes: value })
+                                const value = Number(e.target.value)
+                                if (value >= 0 && value <= 59) {
+                                    if (value === 0) {
+                                        updateState({ ...state, minutes: 0 })
+                                    } else {
+                                        updateState({ ...state, minutes: value })
+                                    }
+                                }
                             }}
                         />
                         <InputBox 
@@ -108,9 +123,14 @@ export default ({ state, updateState, navigation, updateHistory }) => {
                             min={0} max={59}
                             value={seconds}
                             onChange={(e) => {
-                                const value = e.target.value
-                                if (value >= 0 && value <= 59)
-                                    updateState({ ...state, seconds: value })
+                                const value = Number(e.target.value)
+                                if (value >= 0 && value <= 59) {
+                                    if (value === 0) {
+                                        updateState({ ...state, seconds: 0 })
+                                    } else {
+                                        updateState({ ...state, seconds: value })
+                                    }
+                                }
                             }}
                         />
                     </RowBox>

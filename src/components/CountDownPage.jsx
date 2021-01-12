@@ -22,8 +22,11 @@ const BottomBar = styled.div.attrs({
 })``
 
 const SmallpagerStyle = styled.div.attrs({
-    className: 'w-full h-auto bg-yellow-500 relative py-3'
-})``
+    className: 'w-full bg-yellow-500 relative py-3'
+})`
+    min-height: 8em;
+    max-height: 8em;
+`
 
 const CountDownWrapper = styled.div.attrs({
     className: 'h-full w-full flex flex-col items-center justify-center z-10 relative'
@@ -142,7 +145,7 @@ export default ({ pageData, typeData }) => {
                                     heirachy={page.counterBgHeirearchy}>
                                     {`${page.seconds < 10 ? "0" : ""}${page.seconds}`}
                                 </LargeText>
-                                <SmallText>seconds</SmallText>
+                                {page.showLabel ?<SmallText>seconds</SmallText> : null}
                             </CustomColumnBox>
                         
                             <ColonStyle
@@ -158,7 +161,7 @@ export default ({ pageData, typeData }) => {
                                     heirachy={page.counterBgHeirearchy}>
                                     {`${page.minutes < 10 ? "0" : ""}${page.minutes}`}
                                 </LargeText>
-                                <SmallText>minutes</SmallText>
+                                {page.showLabel ? <SmallText>minutes</SmallText> : null}
                             </CustomColumnBox>
                             
                             {page.showHour ? 
@@ -175,7 +178,7 @@ export default ({ pageData, typeData }) => {
                                             heirachy={page.counterBgHeirearchy}>
                                             {`${page.hours < 10 ? "0" : ""}${page.hours}`}
                                         </LargeText>
-                                        <SmallText>hours</SmallText>
+                                        {page.showLabel ? <SmallText>hours</SmallText> : null}
                                     </CustomColumnBox>
                                 </>
                             ) : null}
@@ -194,7 +197,7 @@ export default ({ pageData, typeData }) => {
                                             heirachy={page.counterBgHeirearchy}>
                                             {`${page.days < 10 ? "0" : ""}${page.days}`}
                                         </LargeText>
-                                        <SmallText>days</SmallText>
+                                        {page.showLabel ? <SmallText>days</SmallText> : null}
                                     </CustomColumnBox>
                                 </>
                             ) : null}

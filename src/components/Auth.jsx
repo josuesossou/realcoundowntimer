@@ -1,6 +1,6 @@
 import React, { useState, useContext, useEffect } from 'react'
 import { useParams, Link, useHistory } from 'react-router-dom'
-import { FormInput, SmallBtn, Text } from './Shared'
+import { FormInput, SmallBtn, Text, ErrorWrapper } from './Shared'
 import Logo from './Logo'
 import styled from 'styled-components'
 import { FirebaseContext } from '../backend'
@@ -13,16 +13,11 @@ const FormWrapper = styled.div.attrs({
 const LabelInput = styled.label.attrs(({ err }) => ({
    className: `mb-3 block ${err ? 'border-b-2 border-red-400' : ''}`
 }))``
-
-const ErrorWrapper = styled.div.attrs(({ success }) => ({
-    className: `${success ? 'bg-green-300 text-green-900' :'bg-red-300 text-red-900'}
-    absolute w-full sm:w-2/3 md:w-1/2 p-3 top-0 text-center`
-}))``
-
  
 export default () => {
     const { type } = useParams()
     const history = useHistory()
+    const firebase = useContext(FirebaseContext)
     const pattern = /^[a-zA-Z0-9 ]+$/
     const passwordPattern = /^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])(?=.*[!@#$%^&* ])([a-zA-Z0-9!@#$%^&* ]{8,30})$/
     const [errorMsg, setMessage] = useState({ message: '', errLocation: 0, success: false })
@@ -41,8 +36,6 @@ export default () => {
             })
         }
     }, [])
-
-    const firebase = useContext(FirebaseContext)
 
     const login = async ({ email, password }) => {
         try {

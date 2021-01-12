@@ -3,7 +3,7 @@ import styled from "styled-components"
 import Logo from './Logo'
 import { FirebaseContext } from '../backend'
 import { Link, useHistory } from 'react-router-dom'
-import { LOGIN_PAGE, SIGNUP_PAGE } from '../constants/routes'
+import { LOGIN_PAGE, SIGNUP_PAGE, FEEDBACK, INSTRUCTION, HOME } from '../constants/routes'
 import { Text } from './Shared'
 
 const NavlinkWrapper = styled.div.attrs({
@@ -11,7 +11,7 @@ const NavlinkWrapper = styled.div.attrs({
 })``
 // Navbar
 const Navbar = styled.div.attrs({
-    className: 'w-full h-16 py-3 bg-gray-800 flex justify-center items-center relative '
+    className: 'w-full min-h-16 py-3 bg-gray-800 flex justify-center items-center relative '
 })``
 
 export default () => {
@@ -25,10 +25,24 @@ export default () => {
         <Navbar>
             <NavlinkWrapper>
                 <Logo />
+                <div className='flex md:flex-row flex-col'>
+                    <Text className='md:mr-5 text-center'>
+                        <Link to={HOME}>
+                            Countdowns
+                        </Link>
+                    </Text>
+                    <Text className='md:mr-5 text-center'>
+                        <Link to={FEEDBACK}>
+                            Feedback
+                        </Link>
+                    </Text>
+                    <Text className='text-center'>
+                        <Link to={INSTRUCTION}>
+                            Instructions
+                        </Link>
+                    </Text>
+                </div>
 
-                <Text>
-                    Countdown Pages
-                </Text>
 
                 {firebase.getUser ?
                     (<Text>

@@ -1,5 +1,4 @@
 import styled from "styled-components";
-import tw from "twin.macro"
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faAngleRight, faAngleLeft, faArrowLeft, faTimes,
      faPlus, faTh, faShareAlt, faHeart, faLock } from '@fortawesome/free-solid-svg-icons'
@@ -47,6 +46,11 @@ export const InputBox = styled.input.attrs({
 })`
     outline: 0 !important   
 `
+export const TextAreaBox = styled.textarea.attrs({
+    className: 'transition duration-500 ease-in-out bg-gray-700 focus:bg-gray-900 text-gray-300 pl-2 py-2'
+})`
+    outline: 0 !important
+`
 
 export const SelectBox = styled.select.attrs({
     className: 'transition duration-500 ease-in-out bg-gray-900 focus:bg-gray-700 text-gray-300 pl-2 py-2 w-auto'
@@ -60,7 +64,14 @@ const Input = styled.input.attrs({
 })`
     outline: 0 !important  
 `
+// showing message on form pages
+export const ErrorWrapper = styled.div.attrs(({ success }) => ({
+    className: `${success ? 'bg-green-300 text-green-900' :'bg-red-300 text-red-900'}
+    absolute w-full sm:w-2/3 md:w-1/2 p-3 top-0 text-center`
+}))``
 
+
+// Not sure if this is being use somewhere. Check Auth and general setting
 export const FormInput = ({ type, onChange, value}) => (
     <Input 
         type={type}
@@ -152,6 +163,11 @@ export const Customize = styled.div.attrs({
 export const Spinner = styled.svg.attrs({
     className: 'animate-spin h-8 w-8 mr-3 bg-gray-800',
     viewBox: '0 0 24 24'
+})``
+
+// Page content wrapper
+export const ContentWrapper = styled.div.attrs({
+    className: 'flex flex-col items-center w-full h-full flex-1 relative'
 })``
 
 // Icons from Font Awesome

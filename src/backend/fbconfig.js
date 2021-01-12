@@ -53,6 +53,7 @@ class Firebase {
 		this.auth.currentUser.updatePassword(password);
 
 	// **** Firestore API ***
+	// get one countdown page
 	getCountdownPageData = async (countDownId) => {
 		try {
 			const doc = await this.db.collection("countdownpagedata").doc(countDownId).get()
@@ -63,6 +64,7 @@ class Firebase {
 		}
 	}
 
+	// get all documents under countdownpagedata
 	getCountdownPagesData = async () => {
 		try {
 			const data = await this.db.collection("countdownpagedata")
@@ -73,6 +75,7 @@ class Firebase {
 		}
 	}
 
+	//query use created countdown page
 	getUserCountdownPagesData = async () => {
 		const userId = this.getUser.uid
 
@@ -87,9 +90,26 @@ class Firebase {
 		}
 	}
 	
+	// write pagedata
 	setCountdownPageData = async (countDownId, data) => {
 		try {
 			await this.db.collection("countdownpagedata").doc(countDownId).set(data)
+			return  true
+		} catch (error) {
+			return false
+		}
+	}
+
+	// post feedback
+	sendFeedbackData = async (feedback, id) => {
+		const user = this.getUser
+
+		const data = {
+			feedback,
+			user: user ? user.uid : 'anonymous'
+		}
+		try {
+			await this.db.collection("feedback").doc(id).set(data)
 			return  true
 		} catch (error) {
 			return false
