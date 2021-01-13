@@ -200,7 +200,7 @@ export default ({ state, updateState, navigation, updateHistory }) => {
                             updateState((prev) => ({ ...state, freeze: !prev.freeze  }))
                         }}
                     >
-                        {state.freeze ? 'Start' : 'Freeze'}
+                        {state.freeze ? 'Start' : 'Stop'}
                     </SmallBtn>
                 </CustomColumnBox>) : null}
 
