@@ -4,7 +4,7 @@ import { FormInput, SmallBtn, Text, ErrorWrapper } from './Shared'
 import Logo from './Logo'
 import styled from 'styled-components'
 import { FirebaseContext } from '../backend'
-import { LOGIN_PAGE, SIGNUP_PAGE, PASSWORD_RESET_PAGE } from '../constants/routes'
+import { LOGIN_PAGE, SIGNUP_PAGE, PASSWORD_RESET_PAGE, HOME } from '../constants/routes'
 
 const FormWrapper = styled.div.attrs({
     className: 'w-full md:w-2/5 sm:w-2/3 lg:w-1/4'
@@ -135,7 +135,7 @@ export default () => {
     return (
         <div 
             className={`w-screen h-screen relative bg-gray-300
-                        flex justify-center items-center text-gray-800`}
+                        flex-col flex justify-center items-center text-gray-800`}
         >
            { errorMsg.errLocation !== 0 ?
                 (<ErrorWrapper success={errorMsg.success}>
@@ -228,6 +228,14 @@ export default () => {
                         <Link to={SIGNUP_PAGE} className='font-extrabold'> Sign up</Link>
                     </Text>) : null}
             </FormWrapper>
+            {type === 'signup' ?
+                (<p className='w-1/3 text-center mt-5 text-gray-700'>
+                    You do not need to provide a valid email address, and you won't be
+                    able to reset your password if your email is invalid. 
+                </p>) : null}
+            <Text className='text-center underline mt-8'>
+                <Link to={HOME}>Home</Link>
+            </Text>
         </div>   
     )
 }

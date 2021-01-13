@@ -22,18 +22,27 @@ export default () => {
     const [feedback, setFeedback] = useState('')
     const [isLoading, setLoader] = useState(false)
     const [message, setMessage] = useState({ text: 'yes', show: false, success: true })
+    const pattern = /^[a-zA-Z0-9!@#$%&*'.,?=+_\- ]+$/
 
     const send = () => {
         setLoader(true)
-
-        firebase.sendFeedbackData(feedback, uuidv4()).then(() => {
-            setLoader(false)
-            setMessage({
-                text: "Feedback sent",
-                show: true,
-                success: true
+        if (feedback.match(pattern)) {
+            firebase.sendFeedbackData(feedback, uuidv4()).then(() => {
+                setLoader(false)
+                setMessage({
+                    text: "Feedback sent",
+                    show: true,
+                    success: true
+                })
             })
-        })
+        } else {
+            setLoader(false)
+                setMessage({
+                    text: "Invalid character provided",
+                    show: false,
+                    success: false
+                })
+        }
     }
 
     return (
@@ -48,6 +57,12 @@ export default () => {
                 >
                     <Loader /> 
                 </div>
+            ) : null}
+
+            {!message.success ? (
+                <ErrorWrapper success={false}>
+                   {message.text}
+                </ErrorWrapper>
             ) : null}
 
             {message.show ? (
