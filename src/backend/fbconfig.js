@@ -20,6 +20,7 @@ class Firebase {
 
 		this.auth = app.auth();
 		this.db = app.firestore();
+		this.timeStamp = app.firestore.FieldValue.serverTimestamp
 	}
 	
 	get getUser() {
@@ -31,6 +32,13 @@ class Firebase {
 		const user = JSON.stringify(this.auth.currentUser)
 		localStorage.setItem('user', user)
 	}
+
+	get countDownPagesQuerry() {
+		return this.db.collection("countdownpagedata")
+		.where('isShared', '==', true)
+		.orderBy('id', 'desc')
+	}
+
 
 	// *** Auth API ***
 	doCreateUserWithEmailAndPassword = (email, password) =>
@@ -65,11 +73,25 @@ class Firebase {
 		}
 	}
 
-	// get all documents under countdownpagedata
+	// get 15 initial documents under countdownpagedata
 	getCountdownPagesData = async () => {
 		try {
-			const data = await this.db.collection("countdownpagedata")
-							.where('isShared', '==', true).get()
+			const data = await this.countDownPagesQuerry
+			.limit(15)
+			.get()
+			return data.docs
+		} catch (err) {
+			return null
+		}
+	}
+
+	// get rest of documents under countdownpagedata
+	getMoreCountdownPagesData = async (latestCountDownPageId) => {
+		try {
+			const data = await this.countDownPagesQuerry
+								.startAt(latestCountDownPageId)
+								.limit(15)
+								.get()
 			return data.docs
 		} catch (err) {
 			return null

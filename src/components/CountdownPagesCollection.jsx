@@ -32,6 +32,7 @@ export default () => {
     const [selected, select] = useState('collection') // navbar selection
     const [isLoading, setLoader] = useState(true)
     const firebase = useContext(FirebaseContext)
+    const  {defaultView, documentElement} = document
 
     const getCollection = () => {
         setLoader(true)
@@ -48,6 +49,24 @@ export default () => {
         } else {
             setLoader(false)
         }
+    }
+
+    const getMorePages = () => {
+        if ((defaultView.innerHeight + defaultView.pageYOffset) >= 
+            documentElement.offsetHeight && selected === 'collection') {
+                console.log('working')
+                const latestCountDownPage = collectionPages[collectionPages.length-1]
+                const latestCountDownPageId = latestCountDownPage.data().id
+                console.log(collectionPages)
+                firebase.getMoreCountdownPagesData(latestCountDownPageId).then((data) => {
+                    if (data) {
+                        const newData = [...collectionPages, ...data]
+                        console.log(newData)
+                        setCollectionPages(newData)
+                    } 
+                    // setLoader(false)
+                })
+            }
     }
 
     const getMyPages = async () => {
@@ -81,8 +100,13 @@ export default () => {
     }
 
     useEffect(() => {
+        defaultView.addEventListener('scroll', getMorePages)
         getCollection()
-    }, [])
+
+        return () => {
+            defaultView.removeEventListener('scroll', getMorePages)
+        }
+    }, [getMorePages])
 
     return (
         <CountdownPageWrapper>
