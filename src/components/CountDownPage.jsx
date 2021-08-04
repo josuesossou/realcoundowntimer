@@ -210,11 +210,18 @@ export default ({ pageData, typeData }) => {
                 </SmallpagerStyle>
                 <BottomBar>
                     {typeData === 'mypages' ?
-                        (<Link to={`/${COUNTDOWN_PREVIEW}/edit-page/${countdownId}`}>
-                            <SmallBtn>
-                                Edit
-                            </SmallBtn>
-                        </Link>)
+                        (<div>
+                            <Link to={`/${COUNTDOWN_PREVIEW}/edit-page/${countdownId}`}>
+                                <SmallBtn>
+                                    Edit
+                                </SmallBtn>
+                            </Link>
+                            <Link to={`/${COUNTDOWN_PREVIEW}/new-page/${countdownId}`}>
+                                <SmallBtn className='border-l-2 border-white'>
+                                    Duplicate
+                                </SmallBtn>
+                            </Link>
+                        </div>)
                         :
                         (<Link to={`/${COUNTDOWN_PREVIEW}/new-page/${countdownId}`}>
                             <SmallBtn>
